@@ -1,0 +1,33 @@
+---
+description: Maintain a committed session log (audit trail) for agent-assisted work
+alwaysApply: true
+---
+
+# Session logs (audit trail)
+
+For any non-trivial work (anything that changes code or config and would become
+a PR), maintain a session log in `docs/sessionLogs/`. This is our committed
+audit trail of *why* changes were made.
+
+## When to create one
+
+- Start a log as soon as the work is clearly non-trivial (multi-step, a real
+  decision, or a future PR). Skip it for pure questions, reads, or trivial
+  one-line fixes.
+- One log per unit of work / PR. If continuing earlier work, update the
+  existing log rather than starting a new one.
+
+## How
+
+1. Copy `docs/sessionLogs/TEMPLATE.md` to
+   `docs/sessionLogs/YYYY-MM-DD-<kebab-slug>.md`.
+2. Fill it in **as you work**, while reasoning is fresh — not only at the end.
+   Capture decisions and tradeoffs at the moment they happen.
+3. Keep it curated and skimmable: focus on the WHY (goal, approach,
+   alternatives, decisions, tradeoffs, follow-ups), not a play-by-play of the
+   code. Do not paste raw transcripts.
+4. Never include secrets, tokens, or credentials.
+5. Commit the log in the same change set as the code it documents.
+
+If you made meaningful decisions during a session and no log was created or
+updated, treat that as incomplete work and write the log before finishing.
