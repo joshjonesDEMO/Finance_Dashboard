@@ -1,5 +1,6 @@
 import { BalanceCards } from "@/components/overview/BalanceCards";
 import { BudgetsCard } from "@/components/overview/BudgetsCard";
+import { InsightsCard } from "@/components/overview/InsightsCard";
 import { PotsSummary } from "@/components/overview/PotsSummary";
 import { RecurringBillsCard } from "@/components/overview/RecurringBillsCard";
 import { TransactionsPreview } from "@/components/overview/TransactionsPreview";
@@ -20,6 +21,7 @@ export default function OverviewPage() {
       <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)] lg:items-start">
         <div className="flex flex-col gap-8">
           <PotsSummary pots={data.pots} />
+          <InsightsCard balance={data.balance} budgets={data.budgets} />
           <TransactionsPreview transactions={latest} />
         </div>
         <div className="flex flex-col gap-8">
