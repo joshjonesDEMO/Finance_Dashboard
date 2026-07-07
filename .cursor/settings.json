@@ -1,8 +1,5 @@
 {
   "plugins": {
-    "atlassian": {
-      "enabled": true
-    },
     "figma": {
       "enabled": true
     },

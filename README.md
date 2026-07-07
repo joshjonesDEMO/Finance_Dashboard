@@ -1,14 +1,6 @@
 # finance-dashboard
 
-Personal finance **Overview** MVP modeled on the Figma “Desktop - Home” layout: Next.js App Router, Tailwind v4, TypeScript, and mock data in [`data/finance.json`](data/finance.json).
-
-## Design
-
-The app design is based on the Figma personal finance app design page:
-[Desktop - Home](https://www.figma.com/design/rJb9XS7DMeIaTRYtpH1RuK/personal-finance-app?node-id=101-2&p=f&t=GdELEZOVSXOxPx2Z-0).
-
-The overall design system is also housed in Figma and can be found here:
-[Design System](https://www.figma.com/design/rJb9XS7DMeIaTRYtpH1RuK/personal-finance-app?node-id=182-285&p=f&t=GdELEZOVSXOxPx2Z-0).
+Personal finance **Overview** MVP modeled on the Figma “Desktop - Home” layout: Next.js App Router, Tailwind v4, TypeScript, and mock data in `[data/finance.json](data/finance.json)`.
 
 ## Run locally
 
