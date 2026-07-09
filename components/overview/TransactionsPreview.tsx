@@ -57,9 +57,10 @@ export function TransactionsPreview({ transactions }: TransactionsPreviewProps) 
             >
               <TransactionAvatar tx={tx} />
               <div className="min-w-0 flex-1">
-                <p className="text-preset-4-bold text-grey-900 truncate">
-                  {tx.name}
-                </p>
+                <p
+                  className="text-preset-4-bold text-grey-900 truncate"
+                  dangerouslySetInnerHTML={{ __html: tx.name }}
+                />
                 <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0 text-preset-5 text-grey-500">
                   <span>{tx.category}</span>
                   <span aria-hidden>•</span>
