@@ -1,6 +1,6 @@
 ---
 name: figma-fin-design
-description: "Figma defaults for the finance-dashboard app — ALWAYS load this skill when working in this repo and the user mentions Figma at all (design, mockup, screen, component, design system, tokens, spacing, colors, or a figma.com URL). Unless the user gives an explicit different Figma URL, every Figma reference in this repo means the personal-finance-app file (key rJb9XS7DMeIaTRYtpH1RuK) — never ask which file, and never guess a different one. Applies to the Figma MCP tools (get_design_context, get_screenshot, get_metadata, use_figma, search_design_system, generate_figma_design) and Figma skills (figma-use, figma-generate-design, figma-generate-library, figma-code-connect)."
+description: "Figma defaults for the finance-dashboard app — ALWAYS load this skill when working in this repo and the user mentions Figma at all (design, mockup, screen, component, design system, tokens, spacing, colors, layout, or a figma.com URL). Unless the user gives an explicit different Figma URL, every Figma reference in this repo means the personal-finance-app file (key rJb9XS7DMeIaTRYtpH1RuK) — never ask which file, and never guess a different one. Applies to the Figma MCP tools (get_design_context, get_screenshot, get_metadata, get_variable_defs, use_figma, search_design_system, generate_figma_design) and Figma skills (figma-use, figma-generate-design, figma-generate-library, figma-code-connect, figma-generate-diagram)."
 ---
 
 # Figma conventions for finance-dashboard
@@ -24,8 +24,9 @@ Convert `-` to `:` in the node-id when calling MCP tools (e.g. `get_design_conte
 2. If the user references "the design", "the mockup", "the app design", or "Home" without a URL, use the Desktop - Home node (`101:2`).
 3. If the user references "the design system", "tokens", "components", or "styles" without a URL, use the Design System node (`182:285`).
 4. Before implementing UI from this Figma file, call `get_design_context` on the relevant node, then check the Design System node for matching tokens/components to reuse instead of hardcoding values.
-5. Follow the standard Figma MCP workflow rules: always load `figma-use` before any `use_figma` call, and `figma-generate-design` when translating a full page/screen from this file into code.
+5. Follow the standard Figma MCP workflow rules: always load `figma-use` before any `use_figma` call, `figma-generate-design` when translating a full page/screen from this file into code, and `figma-generate-diagram` before any `generate_diagram` call.
 6. If the user explicitly gives a different Figma URL, follow it for that turn only — don't change the repo default for subsequent turns.
+7. Only the Overview page (`/`) has real implemented content in this app (per `AGENTS.md`) — the Desktop - Home node is its design reference. Other sidebar pages (Transactions, Budgets, Pots, Recurring Bills) are placeholders in code; check this Figma file for their intended designs before building them out, and flag it if no matching frame exists yet.
 
 ## Quick reference
 
