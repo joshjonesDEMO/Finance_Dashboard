@@ -1,0 +1,24 @@
+---
+description: Cursor design system is the UI source of truth — takes priority over Figma when they conflict
+alwaysApply: true
+---
+
+# Design system source of truth
+
+The project’s UI source of truth is:
+
+**[`docs/cursor-design-system.html`](docs/cursor-design-system.html)** (Cursor Design System v3)
+
+## Priority
+
+1. **`docs/cursor-design-system.html`** — tokens, type, spacing, components, and visual rules. Follow this first.
+2. **Figma personal-finance-app** (see `.cursor/skills/figma-fin-design`) — layout/structure and product screens. Use for screen composition and missing specifics.
+3. **Existing app code** — match local patterns only when they already align with (1), or when updating them toward (1).
+
+When Figma (or existing code) conflicts with the Cursor design system doc — colors, type, radius, spacing, accent usage, card treatment, etc. — **prefer the Cursor design system**.
+
+## When implementing UI
+
+- Read the relevant sections of `docs/cursor-design-system.html` before inventing styles.
+- Prefer the CSS custom properties defined in that doc (`--bg-base`, `--accent`, `--text-primary`, type scale, spacing, radii).
+- Do not reintroduce competing palettes or generic AI-default looks that contradict the doc.

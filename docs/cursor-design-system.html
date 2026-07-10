@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Design System</title>
+  <style>
+    /* ═══════════════════════════════════════════════════
+       CURSOR DESIGN TOKENS
+       Copy the :root block into your project.
+       For dark mode, copy the [data-theme="dark"] block too.
+    ═══════════════════════════════════════════════════ */
+
+    :root {
+      /* ── Canvas & Surfaces ── */
+      --bg-base:        #f7f7f4;
+      --bg-surface:     #FFFFFF;
+      --bg-inset:       #F4F2ED;
+      --border:         #e5e4e1;
+
+      /* ── Text ── */
+      --text-primary:   #1a1a1a;
+      --text-secondary: #59595E;
+      --text-muted:     #8e8e8e;
+
+      /* ── Accent — one usage per view, never headlines or large fills ── */
+      --accent:         #f54e00;
+      --accent-muted:   #f7845a;
+
+      /* ── Dark hero surfaces (title / closing sections) ── */
+      --bg-dark:         #0B0B0C;
+      --bg-dark-surface: #141416;
+      --border-dark:     #2B2B2F;
+      --text-dark-primary:   #FFFFFF;
+      --text-dark-secondary: #B4B4B8;
+      --text-dark-muted:     #78787E;
+
+      /* ── Status ── */
+      --status-active-bg:     #FEF3EC;  /* orange tint — no green per brand */
+      --status-active-border: #F5C4A5;
+      --status-active-text:   #7A3000;
+      --status-warn-bg:       #FEF9EC;
+      --status-warn-border:   #E5D98C;
+      --status-warn-text:     #7A5A00;
+      --status-risk-bg:       #F0EEEB;  /* neutral — no red per brand */
+      --status-risk-border:   #C4C1BC;
+      --status-risk-text:     #3D3C39;
+
+      /* ── Chart palette (use in this order) ── */
+      --chart-1: #F76D18;
+      --chart-2: #2C9F28;
+      --chart-3: #A88D02;
+      --chart-4: #8C89E7;
+      --chart-5: #916031;
+      --chart-6: #2268FF;
+
+      /* ── Typography ── */
+      --font-display: "Cursor Gothic", "Helvetica Neue", -apple-system, Arial, sans-serif;
+      --font-body:    -apple-system, "Inter", "Helvetica Neue", Arial, sans-serif;
+      --font-mono:    "JetBrains Mono", "Courier New", monospace;
+
+      /* ── Type scale ── */
+      --text-hero: clamp(48px, 5vw, 72px);
+      --text-5xl:  clamp(36px, 4vw, 54px);
+      --text-4xl:  32px;
+      --text-3xl:  24px;
+      --text-xl:   20px;
+      --text-base: 16px;
+      --text-sm:   14px;
+      --text-xs:   12px;
+
+      /* ── Spacing ── */
+      --space-section:  96px;
+      --space-block:    48px;
+      --space-card-pad: 24px;
+      --space-tight:    16px;
+      --space-micro:    8px;
+
+      /* ── Border radius ── */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       DARK MODE TOKEN OVERRIDES
+       Applied when <html data-theme="dark"> or via
+       prefers-color-scheme: dark (see JS at bottom).
+    ═══════════════════════════════════════════════════ */
+
+    [data-theme="dark"] {
+      /* ── Canvas & Surfaces ── */
+      --bg-base:    #0B0B0C;
+      --bg-surface: #141416;
+      --bg-inset:   #1C1C1F;
+      --border:     #2B2B2F;
+
+      /* ── Text ── */
+      --text-primary:   #F2F2F2;
+      --text-secondary: #B4B4B8;
+      --text-muted:     #78787E;
+
+      /* ── Accent unchanged ── */
+      --accent:       #f54e00;
+      --accent-muted: #f7845a;
+
+      /* ── Dark hero surfaces become deeper in dark mode ── */
+      --bg-dark:         #050507;
+      --bg-dark-surface: #0B0B0C;
+      --border-dark:     #1C1C1F;
+
+      /* ── Status — muted for dark backgrounds ── */
+      --status-active-bg:     #0D2B0F;
+      --status-active-border: #5A2800;
+      --status-active-text:   #E8A06A;
+      --status-warn-bg:       #2A2000;
+      --status-warn-border:   #4A3800;
+      --status-warn-text:     #C9A227;
+      --status-risk-bg:       #2B0A09;
+      --status-risk-border:   #3D3A35;
+      --status-risk-text:     #A8A6A2;
+    }
+
+    /* ── Global transition for smooth theme switch ── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+    }
+
+    body {
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+    /* ── Layout ── */
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      background: var(--bg-surface);
+      padding: 28px 20px;
+      scrollbar-width: thin;
+    }
+    .sidebar-logo {
+      font: 700 16px var(--font-display);
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      display: block;
+      text-decoration: none;
+    }
+    .sidebar-logo span { color: var(--accent); }
+    .sidebar nav a {
+      display: block;
+      font: 14px var(--font-body);
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 5px 0 5px 10px;
+      border-left: 2px solid transparent;
+      margin-left: -10px;
+    }
+    .sidebar nav a:hover { color: var(--text-primary); border-left-color: var(--accent); }
+    .sidebar-group {
+      font: 500 11px var(--font-body);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 20px 0 6px;
+    }
+
+    .main { flex: 1; min-width: 0; }
+
+    /* ── Page header ── */
+    .page-header {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-surface);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .page-header-title { font: 500 15px var(--font-body); color: var(--text-primary); }
+    .page-header-sub   { font: 14px var(--font-body); color: var(--text-muted); }
+
+    /* ── Theme toggle button ── */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: var(--bg-inset);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font: 500 12px var(--font-body);
+      color: var(--text-secondary);
+      cursor: pointer;
+      user-select: none;
+      letter-spacing: .01em;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--text-primary); }
+    .theme-toggle .icon { font-size: 14px; line-height: 1; }
+
+    /* ── Sections ── */
+    .ds-section { padding: 64px 40px; border-bottom: 1px solid var(--border); }
+    .ds-section:last-child { border-bottom: none; }
+
+    .eyebrow {
+      font: 500 11px var(--font-body);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-heading {
+      font: 400 32px/1.2 var(--font-display);
+      color: var(--text-primary);
+      letter-spacing: -.02em;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      font: 16px/1.6 var(--font-body);
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+
+    /* ── Code blocks ── */
+    pre {
+      background: #141416;
+      color: #e5e5e5;
+      font: 13px/1.6 var(--font-mono);
+      padding: 20px 24px;
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin-top: 16px;
+      border: 1px solid #2B2B2F;
+    }
+    code {
+      font: 13px var(--font-mono);
+      background: var(--bg-inset);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    pre code { background: none; color: inherit; padding: 0; font-size: inherit; border: none; }
+
+    /* ── Grids ── */
+    .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .four-col  { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    @media (max-width: 900px) {
+      .two-col, .three-col, .four-col { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .ds-section { padding: 48px 24px; }
+      .wrap { padding: 0 24px; }
+    }
+
+    /* ── Demo helpers ── */
+    .demo-label {
+      font: 500 11px var(--font-body);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .demo-box {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      background: var(--bg-surface);
+    }
+    .demo-box.inset { background: var(--bg-inset); }
+
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* ── Tags ── */
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--bg-inset);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font: 12px var(--font-body);
+      color: var(--text-secondary);
+    }
+    .tag.active { background: var(--status-active-bg); border-color: var(--status-active-border); color: var(--status-active-text); }  /* orange tint — brand: no green */
+    .tag.warn   { background: var(--status-warn-bg);   border-color: var(--status-warn-border);   color: var(--status-warn-text); }
+    .tag.risk   { background: var(--status-risk-bg);   border-color: var(--status-risk-border);   color: var(--status-risk-text); }  /* neutral — brand: no red */
+
+    /* ── Swatch grid ── */
+    .swatch-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+    .swatch { display: flex; flex-direction: column; gap: 6px; min-width: 96px; }
+    .swatch-block { height: 52px; border-radius: var(--radius-sm); border: 1px solid rgba(128,128,128,.2); }
+    .swatch-name  { font: 500 12px var(--font-body); color: var(--text-primary); }
+    .swatch-value { font: 12px var(--font-mono); color: var(--text-muted); }
+
+    /* ── Type specimens ── */
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-role { font: 12px var(--font-mono); color: var(--text-muted); width: 130px; flex-shrink: 0; }
+    .type-spec { font: 12px var(--font-mono); color: var(--accent); width: 200px; flex-shrink: 0; }
+
+    /* ── Spacing strips ── */
+    .space-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+    .space-bar { height: 10px; background: var(--accent); opacity: .2; border-radius: 2px; }
+    .space-meta { font: 12px var(--font-mono); color: var(--text-muted); }
+
+    /* ── Tables ── */
+    .anti-table { width: 100%; border-collapse: collapse; font: 14px var(--font-body); }
+    .anti-table th {
+      text-align: left; padding: 10px 12px;
+      font: 500 11px var(--font-body); letter-spacing: .06em;
+      text-transform: uppercase; color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .anti-table td {
+      padding: 10px 12px; color: var(--text-primary);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top; line-height: 1.5;
+    }
+    .anti-table tr:last-child td { border-bottom: none; }
+    .anti-table tr:nth-child(even) td { background: var(--bg-inset); }
+    .do   { color: var(--status-active-text); font-weight: 600; }
+    .dont { color: var(--status-risk-text);   font-weight: 600; }
+
+    /* ── Token mapping table (dark mode section) ── */
+    .token-table { width: 100%; border-collapse: collapse; font: 13px var(--font-mono); }
+    .token-table th {
+      text-align: left; padding: 8px 12px;
+      font: 500 11px var(--font-body); letter-spacing: .06em;
+      text-transform: uppercase; color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .token-table td {
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
+      color: var(--text-primary); vertical-align: middle;
+    }
+    .token-table tr:last-child td { border-bottom: none; }
+    .token-table tr:nth-child(even) td { background: var(--bg-inset); }
+    .color-dot {
+      display: inline-block;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(128,128,128,.3);
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--bg-dark);
+      padding: 80px 40px 72px;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .hero-eyebrow {
+      font: 500 11px var(--font-body); letter-spacing: .08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 20px;
+    }
+    .hero-title {
+      font: 400 clamp(36px,4vw,56px)/1.1 var(--font-display);
+      color: var(--text-dark-primary); letter-spacing: -.02em;
+      max-width: 600px; margin-bottom: 16px;
+    }
+    .hero-sub {
+      font: 16px/1.6 var(--font-body);
+      color: var(--text-dark-secondary); max-width: 480px;
+    }
+
+    /* ── Dark mode preview panel ── */
+    .dark-preview {
+      background: var(--bg-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 28px;
+    }
+
+    /* ── Theme indicator badge ── */
+    .theme-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font: 500 11px var(--font-body);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      background: var(--bg-inset);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .theme-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a class="sidebar-logo" href="#">Cursor<span>.</span></a>
+    <nav>
+      <div class="sidebar-group">Design</div>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#colors">Colors</a>
+      <a href="#darkmode">Dark Mode</a>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing &amp; Layout</a>
+      <div class="sidebar-group">Components</div>
+      <a href="#stat-cards">Stat Cards</a>
+      <a href="#metrics-grid">Metrics Grid</a>
+      <a href="#badges">Badges &amp; Tags</a>
+      <a href="#tables">Tables</a>
+      <a href="#quotes">Pull Quotes</a>
+      <a href="#progress">Progress Bars</a>
+      <a href="#eyebrow">Eyebrow Labels</a>
+      <a href="#buttons">Buttons</a>
+      <div class="sidebar-group">Patterns</div>
+      <a href="#html-shell">HTML Shell</a>
+      <a href="#dark-surfaces">Dark Surfaces</a>
+      <a href="#antipatterns">Anti-Patterns</a>
+      <a href="#checklist">Checklist</a>
+    </nav>
+  </aside>
+
+  <div class="main">
+
+    <!-- Page header with toggle -->
+    <header class="page-header">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <span class="page-header-title">Cursor Design System</span>
+        <div class="theme-indicator">
+          <span class="theme-dot"></span>
+          <span id="theme-label">Light</span>
+        </div>
+      </div>
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span class="icon" id="theme-icon">&#9790;</span>
+        <span id="theme-btn-label">Dark mode</span>
+      </button>
+    </header>
+
+    <!-- Hero -->
+    <div class="hero" id="philosophy">
+      <div class="hero-eyebrow">Design System</div>
+      <h1 class="hero-title">Cursor Brand &amp; Visual Language</h1>
+      <p class="hero-sub">Calm, technical, credible, quietly premium. Full light/dark theme support included. Use this file as the source of truth when building Cursor-branded interfaces.</p>
+    </div>
+
+    <!-- PHILOSOPHY -->
+    <section class="ds-section">
+      <div class="eyebrow">Foundation</div>
+      <h2 class="section-heading">Design Philosophy</h2>
+      <p class="section-sub">Four principles that govern every visual decision in both light and dark modes.</p>
+      <div class="three-col">
+        <div class="demo-box">
+          <div style="font:300 36px/1 var(--font-display);color:var(--text-muted);margin-bottom:14px;">01</div>
+          <div style="font:400 18px/1.3 var(--font-display);color:var(--text-primary);margin-bottom:8px;">Whitespace is load-bearing</div>
+          <p style="font:14px/1.6 var(--font-body);color:var(--text-secondary);">It communicates confidence. Do not fill empty space. If a section feels crowded, remove elements.</p>
+        </div>
+        <div class="demo-box">
+          <div style="font:300 36px/1 var(--font-display);color:var(--text-muted);margin-bottom:14px;">02</div>
+          <div style="font:400 18px/1.3 var(--font-display);color:var(--text-primary);margin-bottom:8px;">Data beats decoration</div>
+          <p style="font:14px/1.6 var(--font-body);color:var(--text-secondary);">Screenshots and data cards beat illustrations every time. Content proves value — don't dress it up.</p>
+        </div>
+        <div class="demo-box">
+          <div style="font:300 36px/1 var(--font-display);color:var(--text-muted);margin-bottom:14px;">03</div>
+          <div style="font:400 18px/1.3 var(--font-display);color:var(--text-primary);margin-bottom:8px;">Grayscale carries 90%</div>
+          <p style="font:14px/1.6 var(--font-body);color:var(--text-secondary);">Orange is punctuation, not a theme. Use it once per view. Never on headlines, body, or large fills.</p>
+        </div>
+      </div>
+      <div style="margin-top:20px;" class="demo-box inset">
+        <p style="font:14px/1.6 var(--font-body);color:var(--text-secondary);"><strong style="color:var(--text-primary);">Default mode is Cursor Light</strong> — warm off-white canvas, editorial headlines, hairline borders, rounded cards. Dark mode maps every token to a matching dark equivalent. The toggle above updates all live demos on this page.</p>
+      </div>
+    </section>
+
+    <!-- COLORS -->
+    <section class="ds-section" id="colors">
+      <div class="eyebrow">Color System</div>
+      <h2 class="section-heading">Palette</h2>
+      <p class="section-sub">All values defined as CSS custom properties — swapping the theme replaces every token automatically. Toggle the theme above to see live changes.</p>
+
+      <div class="demo-label">Official brand rules (Air.inc brand PDF, June 2026)</div>
+      <div class="demo-box inset" style="margin-bottom:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <div style="font:500 12px var(--font-body);color:var(--text-primary);margin-bottom:8px;">Orange is accent only</div>
+          <p style="font:13px/1.6 var(--font-body);color:var(--text-secondary);">Never a large fill, button background, or header band. One usage per view: small intentional highlights and data emphasis only.</p>
+          <div style="margin-top:10px;font:500 12px var(--font-body);color:var(--text-primary);margin-bottom:4px;">No green, no red</div>
+          <p style="font:13px/1.6 var(--font-body);color:var(--text-secondary);">All positive indicators use orange tint or neutral gray. All negative indicators use neutral gray. The words "green = savings" and "red = risk" are brand violations.</p>
+        </div>
+        <div>
+          <div style="font:500 12px var(--font-body);color:var(--text-primary);margin-bottom:8px;">Logo: rounded-corner cube only</div>
+          <p style="font:13px/1.6 var(--font-body);color:var(--text-secondary);">Use the current cube (rounded corners). The old sharp-corner cube is prohibited. No custom lockups. Minimum clear space = 1/3 of cube width on all sides. Dark cube on light backgrounds, white cube on dark.</p>
+          <div style="margin-top:10px;font:500 12px var(--font-body);color:var(--text-primary);margin-bottom:4px;">Orange: <code style="font-size:12px;">#E8601B</code> (brand PDF) / <code style="font-size:12px;">#f54e00</code> (live deck)</div>
+          <p style="font:13px/1.6 var(--font-body);color:var(--text-secondary);">The official brand PDF cites approximately <code style="font-size:12px;">#E8601B</code>; confirmed live-deck value is <code style="font-size:12px;">#f54e00</code>. Both are used across Cursor assets.</p>
+        </div>
+      </div>
+
+      <div class="demo-label">Canvas &amp; Surface (theme-adaptive)</div>
+      <div class="swatch-grid" style="margin-bottom:32px;">
+        <div class="swatch"><div class="swatch-block" style="background:var(--bg-base);"></div><div class="swatch-name">--bg-base</div><div class="swatch-value">canvas</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--bg-surface);"></div><div class="swatch-name">--bg-surface</div><div class="swatch-value">cards</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--bg-inset);"></div><div class="swatch-name">--bg-inset</div><div class="swatch-value">inset / zebra</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--border);"></div><div class="swatch-name">--border</div><div class="swatch-value">hairlines</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--text-primary);"></div><div class="swatch-name">--text-primary</div><div class="swatch-value">headlines</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--text-secondary);"></div><div class="swatch-name">--text-secondary</div><div class="swatch-value">subheads</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--text-muted);"></div><div class="swatch-name">--text-muted</div><div class="swatch-value">captions</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--accent);"></div><div class="swatch-name">--accent</div><div class="swatch-value">use sparingly</div></div>
+      </div>
+
+      <div class="demo-label">Dark Hero Surfaces (title / closing sections only)</div>
+      <div class="swatch-grid" style="margin-bottom:32px;">
+        <div class="swatch"><div class="swatch-block" style="background:var(--bg-dark);"></div><div class="swatch-name">--bg-dark</div><div class="swatch-value">hero canvas</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--bg-dark-surface);"></div><div class="swatch-name">--bg-dark-surface</div><div class="swatch-value">hero cards</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--text-dark-primary);"></div><div class="swatch-name">--text-dark-primary</div><div class="swatch-value">hero text</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--text-dark-secondary);"></div><div class="swatch-name">--text-dark-secondary</div><div class="swatch-value">hero subtext</div></div>
+      </div>
+
+      <div class="demo-label">Status Badge Colors (theme-adaptive)</div>
+      <div class="swatch-grid" style="margin-bottom:32px;">
+        <div class="swatch"><div class="swatch-block" style="background:var(--status-active-bg);border-color:var(--status-active-border);"></div><div class="swatch-name">Active</div><div class="swatch-value">bg / text</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--status-warn-bg);border-color:var(--status-warn-border);"></div><div class="swatch-name">Warning</div><div class="swatch-value">bg / text</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:var(--status-risk-bg);border-color:var(--status-risk-border);"></div><div class="swatch-name">Risk</div><div class="swatch-value">bg / text</div></div>
+      </div>
+
+      <div class="demo-label">Chart Palette (fixed — same in both themes)</div>
+      <div class="swatch-grid" style="margin-bottom:32px;">
+        <div class="swatch"><div class="swatch-block" style="background:#F76D18;"></div><div class="swatch-name">chart-1</div><div class="swatch-value">#F76D18</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:#2C9F28;"></div><div class="swatch-name">chart-2</div><div class="swatch-value">#2C9F28</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:#A88D02;"></div><div class="swatch-name">chart-3</div><div class="swatch-value">#A88D02</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:#8C89E7;"></div><div class="swatch-name">chart-4</div><div class="swatch-value">#8C89E7</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:#916031;"></div><div class="swatch-name">chart-5</div><div class="swatch-value">#916031</div></div>
+        <div class="swatch"><div class="swatch-block" style="background:#2268FF;"></div><div class="swatch-name">chart-6</div><div class="swatch-value">#2268FF</div></div>
+      </div>
+    </section>
+
+    <!-- DARK MODE IMPLEMENTATION -->
+    <section class="ds-section" id="darkmode">
+      <div class="eyebrow">Dark Mode</div>
+      <h2 class="section-heading">Full Light / Dark Implementation</h2>
+      <p class="section-sub">Three parts: the CSS token overrides, the JavaScript toggle, and the rules for what changes between modes. Copy all three blocks into your project.</p>
+
+      <!-- Token mapping table -->
+      <div class="demo-label">Token mapping — light value vs dark value</div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:32px;">
+        <table class="token-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Light</th>
+              <th>Dark</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>--bg-base</td><td><span class="color-dot" style="background:#f7f7f4;"></span>#f7f7f4</td><td><span class="color-dot" style="background:#0B0B0C;"></span>#0B0B0C</td><td style="font:13px var(--font-body);color:var(--text-muted);">Page canvas</td></tr>
+            <tr><td>--bg-surface</td><td><span class="color-dot" style="background:#FFFFFF;"></span>#FFFFFF</td><td><span class="color-dot" style="background:#141416;"></span>#141416</td><td style="font:13px var(--font-body);color:var(--text-muted);">Cards, panels</td></tr>
+            <tr><td>--bg-inset</td><td><span class="color-dot" style="background:#F4F2ED;"></span>#F4F2ED</td><td><span class="color-dot" style="background:#1C1C1F;"></span>#1C1C1F</td><td style="font:13px var(--font-body);color:var(--text-muted);">Inset areas, zebra rows</td></tr>
+            <tr><td>--border</td><td><span class="color-dot" style="background:#e5e4e1;"></span>#e5e4e1</td><td><span class="color-dot" style="background:#2B2B2F;"></span>#2B2B2F</td><td style="font:13px var(--font-body);color:var(--text-muted);">All hairline borders</td></tr>
+            <tr><td>--text-primary</td><td><span class="color-dot" style="background:#1a1a1a;"></span>#1a1a1a</td><td><span class="color-dot" style="background:#F2F2F2;"></span>#F2F2F2</td><td style="font:13px var(--font-body);color:var(--text-muted);">Headlines, body</td></tr>
+            <tr><td>--text-secondary</td><td><span class="color-dot" style="background:#59595E;"></span>#59595E</td><td><span class="color-dot" style="background:#B4B4B8;"></span>#B4B4B8</td><td style="font:13px var(--font-body);color:var(--text-muted);">Subheads, labels</td></tr>
+            <tr><td>--text-muted</td><td><span class="color-dot" style="background:#8e8e8e;"></span>#8e8e8e</td><td><span class="color-dot" style="background:#78787E;"></span>#78787E</td><td style="font:13px var(--font-body);color:var(--text-muted);">Captions, eyebrows</td></tr>
+            <tr><td>--accent</td><td><span class="color-dot" style="background:#f54e00;"></span>#f54e00</td><td><span class="color-dot" style="background:#f54e00;"></span>#f54e00</td><td style="font:13px var(--font-body);color:var(--text-muted);">Unchanged in dark mode</td></tr>
+            <tr><td>--status-active-*</td><td><span class="color-dot" style="background:#FEF3EC;border-color:#F5C4A5;"></span>Orange tint</td><td><span class="color-dot" style="background:#2B1200;border-color:#5A2800;"></span>Deep orange</td><td style="font:13px var(--font-body);color:var(--text-muted);">Active / healthy badges — orange, not green</td></tr>
+            <tr><td>--status-warn-*</td><td><span class="color-dot" style="background:#FEF9EC;border-color:#E5D98C;"></span>Amber tint</td><td><span class="color-dot" style="background:#2A2000;border-color:#4A3800;"></span>Deep amber</td><td style="font:13px var(--font-body);color:var(--text-muted);">Warning badges</td></tr>
+            <tr><td>--status-risk-*</td><td><span class="color-dot" style="background:#F0EEEB;border-color:#C4C1BC;"></span>Neutral</td><td><span class="color-dot" style="background:#221F1B;border-color:#3D3A35;"></span>Dark neutral</td><td style="font:13px var(--font-body);color:var(--text-muted);">Risk / negative badges — neutral, not red</td></tr>
+            <tr><td>--bg-dark</td><td><span class="color-dot" style="background:#0B0B0C;"></span>#0B0B0C</td><td><span class="color-dot" style="background:#050507;"></span>#050507</td><td style="font:13px var(--font-body);color:var(--text-muted);">Hero section canvas (goes deeper)</td></tr>
+            <tr><td>chart-1 through 6</td><td>Fixed</td><td>Fixed</td><td style="font:13px var(--font-body);color:var(--text-muted);">Same in both themes</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Part 1: CSS -->
+      <div class="demo-label">Part 1 — CSS: the token override block</div>
+<pre><code>/* Light mode: all tokens live in :root */
+:root {
+  --bg-base:    #f7f7f4;
+  --bg-surface: #FFFFFF;
+  --bg-inset:   #F4F2ED;
+  --border:     #e5e4e1;
+  --text-primary:   #1a1a1a;
+  --text-secondary: #59595E;
+  --text-muted:     #8e8e8e;
+  --accent:         #f54e00;
+  --accent-muted:   #f7845a;
+  --bg-dark:         #0B0B0C;
+  --bg-dark-surface: #141416;
+  --border-dark:     #2B2B2F;
+  --text-dark-primary:   #FFFFFF;
+  --text-dark-secondary: #B4B4B8;
+  --text-dark-muted:     #78787E;
+  --status-active-bg:     #EDFBEE; --status-active-border: #F5C4A5; --status-active-text: #7A3000;
+  --status-warn-bg:       #FEF9EC; --status-warn-border:   #E5D98C; --status-warn-text:   #7A5A00;
+  --status-risk-bg:       #FEF0EE; --status-risk-border:   #C4C1BC; --status-risk-text:   #3D3C39;
+}
+
+/* Dark mode: override every adaptive token */
+[data-theme="dark"] {
+  --bg-base:    #0B0B0C;
+  --bg-surface: #141416;
+  --bg-inset:   #1C1C1F;
+  --border:     #2B2B2F;
+  --text-primary:   #F2F2F2;
+  --text-secondary: #B4B4B8;
+  --text-muted:     #78787E;
+  --accent:         #f54e00;   /* unchanged */
+  --accent-muted:   #f7845a;   /* unchanged */
+  --bg-dark:         #050507;
+  --bg-dark-surface: #0B0B0C;
+  --border-dark:     #1C1C1F;
+  --status-active-bg:     #2B1200; --status-active-border: #5A2800; --status-active-text: #E8A06A;
+  --status-warn-bg:       #2A2000; --status-warn-border:   #4A3800; --status-warn-text:   #C9A227;
+  --status-risk-bg:       #221F1B; --status-risk-border:   #3D3A35; --status-risk-text:   #A8A6A2;
+}
+
+/* Smooth transition between themes */
+*, *::before, *::after {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+}</code></pre>
+
+      <hr class="divider">
+
+      <!-- Part 2: JavaScript -->
+      <div class="demo-label">Part 2 — JavaScript: toggle + localStorage + system preference</div>
+<pre><code>/**
+ * Cursor theme toggle
+ * - Respects prefers-color-scheme on first visit
+ * - Persists user choice to localStorage
+ * - Sets data-theme="light" | "dark" on &lt;html&gt;
+ */
+
+const STORAGE_KEY = 'cursor-theme';
+
+function getPreferredTheme() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) return saved;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(STORAGE_KEY, theme);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+// Apply on page load — BEFORE first paint to avoid flash
+applyTheme(getPreferredTheme());
+
+// React to OS-level changes (if user hasn't manually chosen)
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =&gt; {
+  if (!localStorage.getItem(STORAGE_KEY)) {
+    applyTheme(e.matches ? 'dark' : 'light');
+  }
+});
+
+// HTML: wire up your toggle button
+// &lt;button onclick="toggleTheme()"&gt;Toggle theme&lt;/button&gt;</code></pre>
+
+      <hr class="divider">
+
+      <!-- Part 3: Framework patterns -->
+      <div class="demo-label">Part 3 — Framework patterns</div>
+      <div class="three-col" style="margin-bottom:24px;">
+        <div class="demo-box">
+          <div style="font:500 12px var(--font-body);color:var(--text-primary);margin-bottom:10px;">React hook</div>
+<pre style="margin-top:0;font-size:12px;padding:12px 14px;"><code>function useTheme() {
+  const [theme, setTheme] =
+    useState(getPreferredTheme);
+
+  useEffect(() =&gt; {
+    document.documentElement
+      .setAttribute('data-theme', theme);
+    localStorage.setItem(
+      'cursor-theme', theme);
+  }, [theme]);
+
+  const toggle = () =&gt;
+    setTheme(t =&gt;
+      t === 'dark' ? 'light' : 'dark');
+
+  return { theme, toggle };
+}</code></pre>
+        </div>
+        <div class="demo-box">
+          <div style="font:500 12px var(--font-body);color:var(--text-primary);margin-bottom:10px;">Tailwind dark mode</div>
+<pre style="margin-top:0;font-size:12px;padding:12px 14px;"><code>// tailwind.config.js
+module.exports = {
+  darkMode: 'class',
+  // or 'media' for OS-only
+  theme: {
+    extend: {
+      colors: {
+        'cursor-bg': 'var(--bg-base)',
+        'cursor-surface': 'var(--bg-surface)',
+        'cursor-inset': 'var(--bg-inset)',
+        'cursor-border': 'var(--border)',
+        'cursor-accent': '#f54e00',
+      }
+    }
+  }
+}
+
+// Usage in JSX:
+// className="bg-white dark:bg-[#141416]"</code></pre>
+        </div>
+        <div class="demo-box">
+          <div style="font:500 12px var(--font-body);color:var(--text-primary);margin-bottom:10px;">Vue / Nuxt</div>
+<pre style="margin-top:0;font-size:12px;padding:12px 14px;"><code>// composables/useTheme.js
+export function useTheme() {
+  const theme = ref(
+    localStorage.getItem('cursor-theme')
+    ?? (window.matchMedia(
+      '(prefers-color-scheme: dark)')
+      .matches ? 'dark' : 'light')
+  );
+
+  watch(theme, val =&gt; {
+    document.documentElement
+      .setAttribute('data-theme', val);
+    localStorage.setItem(
+      'cursor-theme', val);
+  }, { immediate: true });
+
+  const toggle = () =&gt;
+    theme.value =
+      theme.value === 'dark'
+        ? 'light' : 'dark';
+
+  return { theme, toggle };
+}</code></pre>
+        </div>
+      </div>
+
+      <!-- Rules for dark mode -->
+      <div class="demo-label">Dark mode rules</div>
+      <table class="anti-table">
+        <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Always use CSS variables</td><td>Never hardcode hex values in components — they won't switch with the theme. <code>color: var(--text-primary)</code> not <code>color: #1a1a1a</code>.</td></tr>
+          <tr><td>Avoid inline style hex values</td><td>In React/Vue/HTML, hardcoded inline hex breaks theme switching. Prefer CSS classes with variable references, or use CSS-in-JS with the variable names.</td></tr>
+          <tr><td>Don't invert images</td><td>Product screenshots and logos generally don't need a dark-mode variant. Use the white Cursor logo on dark-background hero sections, dark logo on light sections — this is a placement rule, not a theme rule.</td></tr>
+          <tr><td>Charts stay fixed</td><td>The chart palette (#F76D18, #2C9F28, etc.) is intentionally the same in both modes. These colors are calibrated for legibility on either canvas.</td></tr>
+          <tr><td>Orange stays orange</td><td><code>--accent: #f54e00</code> is identical in light and dark. It's bright enough to work on dark backgrounds without adjustment.</td></tr>
+          <tr><td>Code blocks are always dark</td><td><code>pre</code> blocks use a fixed dark background (#141416) regardless of theme — dark code blocks are the universal convention.</td></tr>
+          <tr><td>No flash on load</td><td>Apply the theme to <code>&lt;html&gt;</code> before first paint — put the <code>applyTheme()</code> call in a <code>&lt;script&gt;</code> tag in <code>&lt;head&gt;</code>, not in a deferred bundle.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- TYPOGRAPHY -->
+    <section class="ds-section" id="typography">
+      <div class="eyebrow">Typography</div>
+      <h2 class="section-heading">Type Scale &amp; Rules</h2>
+      <p class="section-sub">Headlines use normal (not bold) weight. Bold is reserved for a single-word emphasis or standalone stat. Never center body text.</p>
+
+      <div class="demo-label">Font Stacks</div>
+      <div class="demo-box" style="margin-bottom:24px;">
+        <div style="margin-bottom:20px;">
+          <div style="font:500 11px var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Display — headlines, large UI text, stat numbers</div>
+          <div style="font:400 28px/1 var(--font-display);color:var(--text-primary);">Cursor Gothic &rarr; Helvetica Neue &rarr; -apple-system</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font:500 11px var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Body — UI copy, labels, metadata, paragraphs</div>
+          <div style="font:400 18px/1 var(--font-body);color:var(--text-secondary);">-apple-system &rarr; Inter &rarr; Helvetica Neue &rarr; Arial</div>
+        </div>
+        <div>
+          <div style="font:500 11px var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;">Mono — code, terminal, numeric table cells (NOT stat numbers)</div>
+          <div style="font:400 16px/1 var(--font-mono);color:var(--text-secondary);">JetBrains Mono &rarr; Courier New &rarr; monospace</div>
+        </div>
+      </div>
+      <div class="demo-box inset" style="margin-top:16px;">
+        <p style="font:13px/1.6 var(--font-body);color:var(--text-secondary);"><strong style="color:var(--text-primary);">Google Slides / Docs fallback:</strong> Helvetica (not Helvetica Neue). <strong style="color:var(--text-primary);">Prohibited fonts:</strong> Calibri, Sora, Times New Roman, Cambria. Official brand source: Cursor Brand System &amp; Guidelines PDF (Air.inc, June 2026).</p>
+      </div>
+
+      <div class="demo-label">Type Scale</div>
+      <div class="demo-box" style="margin-bottom:24px;">
+        <div class="type-row">
+          <div class="type-role">hero</div>
+          <div class="type-spec">clamp(48-72px) display</div>
+          <div style="font:400 clamp(28px,3vw,44px)/1.1 var(--font-display);color:var(--text-primary);letter-spacing:-.02em;">3&times; faster velocity</div>
+        </div>
+        <div class="type-row">
+          <div class="type-role">text-4xl</div>
+          <div class="type-spec">32px/1.2 display</div>
+          <div style="font:400 32px/1.2 var(--font-display);color:var(--text-primary);">Card headline</div>
+        </div>
+        <div class="type-row">
+          <div class="type-role">text-xl</div>
+          <div class="type-spec">20px/1.5 body</div>
+          <div style="font:400 20px/1.5 var(--font-body);color:var(--text-secondary);">Body large</div>
+        </div>
+        <div class="type-row">
+          <div class="type-role">text-base</div>
+          <div class="type-spec">16px/1.5 body</div>
+          <div style="font:400 16px/1.5 var(--font-body);color:var(--text-secondary);">Default paragraph text</div>
+        </div>
+        <div class="type-row">
+          <div class="type-role">text-sm</div>
+          <div class="type-spec">14px/1.5 body</div>
+          <div style="font:400 14px/1.5 var(--font-body);color:var(--text-muted);">Caption, card labels</div>
+        </div>
+        <div class="type-row">
+          <div class="type-role">eyebrow</div>
+          <div class="type-spec">11px UC ls.08em 500</div>
+          <div style="font:500 11px/1 var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);">SECTION LABEL</div>
+        </div>
+        <div class="type-row">
+          <div class="type-role">mono / table</div>
+          <div class="type-spec">14px mono tabular</div>
+          <div style="font:400 14px var(--font-mono);font-variant-numeric:tabular-nums;color:var(--text-primary);">2,238 &middot; $2.4M &middot; 97.8%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPACING -->
+    <section class="ds-section" id="spacing">
+      <div class="eyebrow">Spacing &amp; Layout</div>
+      <h2 class="section-heading">Grid, Spacing &amp; Radius</h2>
+
+      <div class="demo-label">Spacing Scale</div>
+      <div class="demo-box" style="margin-bottom:24px;">
+        <div class="space-row"><div class="space-bar" style="width:8px;"></div><div class="space-meta">--space-micro: 8px</div></div>
+        <div class="space-row"><div class="space-bar" style="width:16px;"></div><div class="space-meta">--space-tight: 16px</div></div>
+        <div class="space-row"><div class="space-bar" style="width:24px;"></div><div class="space-meta">--space-card-pad: 24px</div></div>
+        <div class="space-row"><div class="space-bar" style="width:48px;"></div><div class="space-meta">--space-block: 48px</div></div>
+        <div class="space-row"><div class="space-bar" style="width:96px;"></div><div class="space-meta">--space-section: 96px</div></div>
+      </div>
+
+      <div class="demo-label">Border Radius Scale</div>
+      <div class="demo-box" style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-end;margin-bottom:24px;">
+        <div style="text-align:center;"><div style="width:52px;height:52px;background:var(--bg-inset);border:1px solid var(--border);border-radius:6px;margin:0 auto 8px;"></div><div style="font:12px var(--font-mono);color:var(--text-muted);">sm 6px</div></div>
+        <div style="text-align:center;"><div style="width:60px;height:60px;background:var(--bg-inset);border:1px solid var(--border);border-radius:10px;margin:0 auto 8px;"></div><div style="font:12px var(--font-mono);color:var(--text-muted);">md 10px</div></div>
+        <div style="text-align:center;"><div style="width:68px;height:68px;background:var(--bg-inset);border:1px solid var(--border);border-radius:16px;margin:0 auto 8px;"></div><div style="font:12px var(--font-mono);color:var(--text-muted);">lg 16px</div></div>
+        <div style="text-align:center;"><div style="width:76px;height:76px;background:var(--bg-inset);border:1px solid var(--border);border-radius:24px;margin:0 auto 8px;"></div><div style="font:12px var(--font-mono);color:var(--text-muted);">xl 24px</div></div>
+        <div style="text-align:center;"><div style="width:64px;height:30px;background:var(--bg-inset);border:1px solid var(--border);border-radius:100px;margin:0 auto 8px;"></div><div style="font:12px var(--font-mono);color:var(--text-muted);">pill</div></div>
+      </div>
+    </section>
+
+    <!-- STAT CARDS -->
+    <section class="ds-section" id="stat-cards">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Stat Cards</h2>
+      <p class="section-sub">All components use CSS variables — they switch automatically with the theme. Toggle above to verify.</p>
+
+      <div class="demo-label">Live demo (theme-adaptive)</div>
+      <div class="two-col" style="margin-bottom:24px;">
+        <div style="border:1px solid var(--border);border-radius:var(--radius-sm);padding:24px;background:var(--bg-surface);">
+          <div style="font:300 48px/1 var(--font-display);color:var(--text-primary);font-variant-numeric:tabular-nums;">3,400</div>
+          <div style="font:14px var(--font-body);color:var(--text-muted);margin-top:8px;">Active engineers</div>
+        </div>
+        <div style="border:1px solid var(--border);border-top:2px solid var(--accent);border-radius:var(--radius-sm);padding:24px;background:var(--bg-surface);">
+          <div style="font:300 48px/1 var(--font-display);color:var(--accent);font-variant-numeric:tabular-nums;">85%</div>
+          <div style="font:14px var(--font-body);color:var(--text-muted);margin-top:8px;">Seat utilization — highlighted</div>
+        </div>
+      </div>
+<pre><code>/* Use CSS variables — not hardcoded hex — so the component adapts to theme */
+&lt;div style="border:1px solid var(--border); border-radius:var(--radius-sm);
+            padding:24px; background:var(--bg-surface);"&gt;
+  &lt;div style="font:300 48px/1 var(--font-display);
+              color:var(--text-primary); font-variant-numeric:tabular-nums;"&gt;
+    3,400
+  &lt;/div&gt;
+  &lt;div style="font:14px var(--font-body); color:var(--text-muted); margin-top:8px;"&gt;
+    Active engineers
+  &lt;/div&gt;
+&lt;/div&gt;
+
+/* Highlighted variant */
+border-top: 2px solid var(--accent);
+color: var(--accent);  /* for the number */</code></pre>
+    </section>
+
+    <!-- METRICS GRID -->
+    <section class="ds-section" id="metrics-grid">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Metrics Grid</h2>
+
+      <div class="demo-label">4-column divider grid (live demo — theme-adaptive)</div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--bg-surface);margin-bottom:24px;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);">
+          <div style="padding:28px 24px;border-right:1px solid var(--border);">
+            <div style="font:300 44px/1 var(--font-display);color:var(--text-primary);font-variant-numeric:tabular-nums;">3,237</div>
+            <div style="font:14px var(--font-body);color:var(--text-muted);margin-top:10px;">Monthly active users</div>
+          </div>
+          <div style="padding:28px 24px;border-right:1px solid var(--border);">
+            <div style="font:300 44px/1 var(--font-display);color:var(--text-primary);font-variant-numeric:tabular-nums;">4,444</div>
+            <div style="font:14px var(--font-body);color:var(--text-muted);margin-top:10px;">Licensed seats</div>
+          </div>
+          <div style="padding:28px 24px;border-right:1px solid var(--border);">
+            <div style="font:300 44px/1 var(--font-display);color:var(--text-primary);font-variant-numeric:tabular-nums;">73%</div>
+            <div style="font:14px var(--font-body);color:var(--text-muted);margin-top:10px;">Seat utilization</div>
+          </div>
+          <div style="padding:28px 24px;">
+            <div style="font:300 44px/1 var(--font-display);color:var(--text-primary);font-variant-numeric:tabular-nums;">97.8%</div>
+            <div style="font:14px var(--font-body);color:var(--text-muted);margin-top:10px;">AI agent adoption</div>
+          </div>
+        </div>
+      </div>
+<pre><code>&lt;div style="border:1px solid var(--border); border-radius:var(--radius-sm);
+            overflow:hidden; background:var(--bg-surface);"&gt;
+  &lt;div style="display:grid; grid-template-columns:repeat(4,1fr);"&gt;
+    &lt;div style="padding:28px 24px; border-right:1px solid var(--border);"&gt;
+      &lt;div style="font:300 44px/1 var(--font-display);
+                  color:var(--text-primary); font-variant-numeric:tabular-nums;"&gt;
+        3,237
+      &lt;/div&gt;
+      &lt;div style="font:14px var(--font-body); color:var(--text-muted); margin-top:10px;"&gt;
+        Monthly active users
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- Last cell: no border-right --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- BADGES -->
+    <section class="ds-section" id="badges">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Badges &amp; Tags</h2>
+
+      <div class="demo-label">All variants (live demo — theme-adaptive)</div>
+      <div class="demo-box" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:24px;">
+        <span class="tag">Enterprise</span>
+        <span class="tag">Teams Plan</span>
+        <span class="tag active">Active</span>
+        <span class="tag warn">At Risk</span>
+        <span class="tag risk">Churning</span>
+        <span style="display:inline-block;padding:3px 10px;background:var(--bg-inset);border:1px solid var(--border);border-radius:100px;font:500 11px var(--font-body);letter-spacing:.07em;text-transform:uppercase;color:var(--accent);">Engineer</span>
+      </div>
+<pre><code>/* Default */
+background: var(--bg-inset);
+border: 1px solid var(--border);
+color: var(--text-secondary);
+
+/* Active (orange tint — no green) */ background: var(--status-active-bg); border-color: var(--status-active-border); color: var(--status-active-text);
+/* Warning (amber)                   */ background: var(--status-warn-bg);   border-color: var(--status-warn-border);   color: var(--status-warn-text);
+/* Risk (neutral — no red)           */ background: var(--status-risk-bg);   border-color: var(--status-risk-border);   color: var(--status-risk-text);
+
+/* Inline role label (orange — inside card only) */
+color: var(--accent);</code></pre>
+    </section>
+
+    <!-- TABLES -->
+    <section class="ds-section" id="tables">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Data Tables</h2>
+
+      <div class="demo-label">Live demo (theme-adaptive)</div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:24px;">
+        <table style="width:100%;border-collapse:collapse;font:14px var(--font-body);">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);background:var(--bg-inset);">
+              <th style="text-align:left;padding:10px 16px;color:var(--text-muted);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;">Metric</th>
+              <th style="text-align:right;padding:10px 16px;color:var(--text-muted);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;">Value</th>
+              <th style="text-align:left;padding:10px 16px;color:var(--text-muted);font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:10px 16px;color:var(--text-primary);">MAU (L30d)</td>
+              <td style="padding:10px 16px;text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--text-primary);">2,238</td>
+              <td style="padding:10px 16px;"><span class="tag active">Active</span></td>
+            </tr>
+            <tr style="background:var(--bg-inset);border-bottom:1px solid var(--border);">
+              <td style="padding:10px 16px;color:var(--text-primary);">Licensed Seats</td>
+              <td style="padding:10px 16px;text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--text-primary);">3,618</td>
+              <td style="padding:10px 16px;"><span class="tag warn">61.8%</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);">
+              <td style="padding:10px 16px;color:var(--text-primary);">ARR</td>
+              <td style="padding:10px 16px;text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--text-primary);">$2.4M</td>
+              <td style="padding:10px 16px;"><span class="tag active">On track</span></td>
+            </tr>
+            <tr>
+              <td style="padding:10px 16px;color:var(--text-primary);">Renewal Date</td>
+              <td style="padding:10px 16px;text-align:right;font-family:var(--font-mono);color:var(--text-primary);">Dec 15, 2026</td>
+              <td style="padding:10px 16px;"><span class="tag risk">187 days</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+<pre><code>&lt;table style="width:100%; border-collapse:collapse; font:14px var(--font-body);"&gt;
+  &lt;thead&gt;
+    &lt;tr style="border-bottom:1px solid var(--border); background:var(--bg-inset);"&gt;
+      &lt;th style="text-align:left; padding:10px 12px; color:var(--text-muted);
+                 font-weight:500; font-size:11px; letter-spacing:.06em;
+                 text-transform:uppercase;"&gt;Metric&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr style="border-bottom:1px solid var(--border);"&gt;
+      &lt;td style="padding:10px 12px; color:var(--text-primary);"&gt;MAU&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;!-- Zebra: even rows get background:var(--bg-inset) --&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+    </section>
+
+    <!-- PULL QUOTES -->
+    <section class="ds-section" id="quotes">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Pull Quotes</h2>
+
+      <div class="demo-label">Live demo (theme-adaptive)</div>
+      <div class="demo-box" style="margin-bottom:24px;">
+        <blockquote style="border-left:2px solid var(--accent);padding:4px 0 4px 24px;margin:0;">
+          <p style="font:400 22px/1.4 var(--font-display);color:var(--text-primary);margin:0 0 10px;">"We compressed 60 person-months of work into two months with one engineer."</p>
+          <cite style="font:13px var(--font-body);color:var(--text-muted);font-style:normal;">Principal Engineer, National Australia Bank</cite>
+        </blockquote>
+      </div>
+<pre><code>&lt;blockquote style="border-left:2px solid var(--accent);
+                   padding:4px 0 4px 24px; margin:0;"&gt;
+  &lt;p style="font:400 22px/1.4 var(--font-display);
+            color:var(--text-primary); margin:0 0 10px;"&gt;
+    "Quote text."
+  &lt;/p&gt;
+  &lt;cite style="font:13px var(--font-body); color:var(--text-muted); font-style:normal;"&gt;
+    Name, Title, Company
+  &lt;/cite&gt;
+&lt;/blockquote&gt;</code></pre>
+    </section>
+
+    <!-- PROGRESS BARS -->
+    <section class="ds-section" id="progress">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Progress &amp; Utilization Bars</h2>
+
+      <div class="demo-label">Live demo (theme-adaptive)</div>
+      <div class="demo-box" style="display:flex;flex-direction:column;gap:20px;margin-bottom:24px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font:13px var(--font-body);color:var(--text-secondary);">Seat Utilization</span>
+            <span style="font:700 13px var(--font-mono);color:var(--text-primary);">85%</span>
+          </div>
+          <div style="height:4px;background:var(--bg-inset);border-radius:2px;border:1px solid var(--border);">
+            <div style="height:4px;background:var(--accent);border-radius:2px;width:85%;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font:13px var(--font-body);color:var(--text-secondary);">Agent Adoption</span>
+            <span style="font:700 13px var(--font-mono);color:var(--status-active-text);">97.8%</span>
+          </div>
+          <div style="height:4px;background:var(--bg-inset);border-radius:2px;border:1px solid var(--border);">
+            <div style="height:4px;background:var(--chart-2);border-radius:2px;width:97.8%;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font:13px var(--font-body);color:var(--text-secondary);">Pool Burn</span>
+            <span style="font:700 13px var(--font-mono);color:var(--status-warn-text);">62%</span>
+          </div>
+          <div style="height:4px;background:var(--bg-inset);border-radius:2px;border:1px solid var(--border);">
+            <div style="height:4px;background:var(--status-warn-border);border-radius:2px;width:62%;"></div>
+          </div>
+        </div>
+      </div>
+<pre><code>&lt;div&gt;
+  &lt;div style="display:flex; justify-content:space-between; margin-bottom:6px;"&gt;
+    &lt;span style="font:13px var(--font-body); color:var(--text-secondary);"&gt;Label&lt;/span&gt;
+    &lt;span style="font:700 13px var(--font-mono); color:var(--text-primary);"&gt;85%&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div style="height:4px; background:var(--border); border-radius:2px;"&gt;
+    &lt;div style="height:4px; background:var(--accent); border-radius:2px; width:85%;"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    </section>
+
+    <!-- EYEBROW LABELS -->
+    <section class="ds-section" id="eyebrow">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Eyebrow Labels</h2>
+      <p class="section-sub">Structural eyebrows use <code>var(--text-muted)</code>. Orange is only for inline emphasis inside card areas.</p>
+
+      <div class="demo-box" style="display:flex;flex-direction:column;gap:24px;margin-bottom:24px;">
+        <div>
+          <div style="font:500 11px var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">STRUCTURAL EYEBROW — var(--text-muted)</div>
+          <div style="font:400 28px/1.2 var(--font-display);color:var(--text-primary);">Section headline follows</div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:24px;">
+          <div style="font:400 13px/1.4 var(--font-display);font-style:italic;color:var(--accent);margin-bottom:8px;">Italic context sub-label — var(--accent), inside card</div>
+          <div style="font:400 20px/1.3 var(--font-body);color:var(--text-primary);">Card headline here</div>
+        </div>
+      </div>
+<pre><code>/* Structural eyebrow — var(--text-muted) always */
+color: var(--text-muted);
+font: 500 11px var(--font-body);
+letter-spacing: .08em;
+text-transform: uppercase;
+
+/* Inline role label or italic context — var(--accent) */
+color: var(--accent);</code></pre>
+    </section>
+
+    <!-- BUTTONS -->
+    <section class="ds-section" id="buttons">
+      <div class="eyebrow">Components</div>
+      <h2 class="section-heading">Buttons</h2>
+
+      <div class="demo-box" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:24px;">
+        <button style="padding:10px 20px;background:var(--text-primary);color:var(--bg-base);border:none;border-radius:var(--radius-sm);font:500 14px var(--font-body);cursor:pointer;">Primary</button>
+        <button style="padding:10px 20px;background:var(--bg-surface);color:var(--text-primary);border:1px solid var(--border);border-radius:var(--radius-sm);font:500 14px var(--font-body);cursor:pointer;">Secondary</button>
+        <button style="padding:10px 20px;background:var(--accent);color:#FFFFFF;border:none;border-radius:var(--radius-sm);font:500 14px var(--font-body);cursor:pointer;">Accent (rare)</button>
+        <button style="padding:7px 14px;background:var(--bg-surface);color:var(--text-secondary);border:1px solid var(--border);border-radius:var(--radius-sm);font:13px var(--font-body);cursor:pointer;">Small</button>
+        <button style="padding:0;background:none;border:none;color:var(--accent);font:500 14px var(--font-body);cursor:pointer;text-decoration:underline;text-underline-offset:3px;">Text link</button>
+      </div>
+<pre><code>/* Primary — inverts: dark text on light bg, light text on dark bg */
+background: var(--text-primary);
+color: var(--bg-base);
+
+/* Secondary */
+background: var(--bg-surface);
+color: var(--text-primary);
+border: 1px solid var(--border);
+
+/* Accent (use sparingly) */
+background: var(--accent);
+color: #FFFFFF;   /* always white — accent is bright enough in both modes */
+
+/* Text link */
+color: var(--accent);</code></pre>
+    </section>
+
+    <!-- HTML SHELL -->
+    <section class="ds-section" id="html-shell">
+      <div class="eyebrow">Patterns</div>
+      <h2 class="section-heading">HTML Document Shell</h2>
+      <p class="section-sub">Complete base with dark mode, toggle, and no-flash load. Self-contained — no CDN imports.</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en" data-theme="light"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;[Title] — Cursor&lt;/title&gt;
+
+  &lt;!-- ① Apply theme BEFORE first paint (prevents flash) --&gt;
+  &lt;script&gt;
+    (function() {
+      var saved = localStorage.getItem('cursor-theme');
+      var preferred = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', preferred);
+    })();
+  &lt;/script&gt;
+
+  &lt;style&gt;
+    :root {
+      --bg-base:    #f7f7f4; --bg-surface: #FFFFFF; --bg-inset: #F4F2ED;
+      --border:     #e5e4e1;
+      --text-primary: #1a1a1a; --text-secondary: #59595E; --text-muted: #8e8e8e;
+      --accent: #f54e00; --accent-muted: #f7845a;
+      --bg-dark: #0B0B0C; --bg-dark-surface: #141416; --border-dark: #2B2B2F;
+      --text-dark-primary: #FFFFFF; --text-dark-secondary: #B4B4B8;
+      --status-active-bg:#FEF3EC; --status-active-border:#F5C4A5; --status-active-text:#7A3000;  /* orange tint */
+      --status-warn-bg:#FEF9EC;   --status-warn-border:#E5D98C;   --status-warn-text:#7A5A00;
+      --status-risk-bg:#FEF0EE;   --status-risk-border:#C4C1BC;   --status-risk-text:#3D3C39;
+      --font-display: "Cursor Gothic","Helvetica Neue",-apple-system,Arial,sans-serif;
+      --font-body:    -apple-system,"Helvetica Neue",Arial,sans-serif;
+      --font-mono:    "JetBrains Mono","Courier New",monospace;
+      --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+    }
+    [data-theme="dark"] {
+      --bg-base:#0B0B0C; --bg-surface:#141416; --bg-inset:#1C1C1F; --border:#2B2B2F;
+      --text-primary:#F2F2F2; --text-secondary:#B4B4B8; --text-muted:#78787E;
+      --bg-dark:#050507; --bg-dark-surface:#0B0B0C; --border-dark:#1C1C1F;
+      --status-active-bg:#2B1200; --status-active-border:#5A2800; --status-active-text:#E8A06A;
+      --status-warn-bg:#2A2000;   --status-warn-border:#4A3800;   --status-warn-text:#C9A227;
+      --status-risk-bg:#2B0A09;   --status-risk-border:#3D3A35;   --status-risk-text:#A8A6A2;
+    }
+    *, *::before, *::after {
+      box-sizing:border-box; margin:0; padding:0;
+      transition: background-color .2s ease, border-color .2s ease, color .15s ease;
+    }
+    body {
+      background:var(--bg-base); color:var(--text-primary);
+      font-family:var(--font-body); font-size:16px; line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+    }
+    .wrap { max-width:1200px; margin:0 auto; padding:0 40px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;!-- ② Toggle button --&gt;
+  &lt;button onclick="toggleTheme()" aria-label="Toggle theme"&gt;
+    Toggle theme
+  &lt;/button&gt;
+
+  &lt;!-- Your content using CSS variables --&gt;
+  &lt;main style="background:var(--bg-base);"&gt;
+    &lt;h1 style="color:var(--text-primary);"&gt;Headline&lt;/h1&gt;
+    &lt;p style="color:var(--text-secondary);"&gt;Body copy.&lt;/p&gt;
+  &lt;/main&gt;
+
+  &lt;!-- ③ Theme JS — put before &lt;/body&gt; --&gt;
+  &lt;script&gt;
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme') || 'light';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('cursor-theme', next);
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+      if (!localStorage.getItem('cursor-theme')) {
+        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      }
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </section>
+
+    <!-- DARK SURFACES -->
+    <section class="ds-section" id="dark-surfaces">
+      <div class="eyebrow">Patterns</div>
+      <h2 class="section-heading">Dark Hero Surfaces</h2>
+      <p class="section-sub">Use only for title sections, closing screens, and statement blocks — never for content or data sections. These use <code>--bg-dark</code> and <code>--text-dark-*</code> tokens, which deepen slightly in dark mode to maintain contrast.</p>
+
+      <div class="demo-label">Dark hero (live demo)</div>
+      <div class="dark-preview" style="margin-bottom:24px;">
+        <div style="font:500 11px var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">Account Brief</div>
+        <div style="font:400 42px/1.1 var(--font-display);color:var(--text-dark-primary);letter-spacing:-.02em;margin-bottom:12px;">Goldman Sachs</div>
+        <div style="font:16px/1.6 var(--font-body);color:var(--text-dark-secondary);max-width:360px;">Enterprise renewal · $5.2M ARR · 4,444 engineers</div>
+      </div>
+<pre><code>/* Dark hero — uses --bg-dark / --text-dark-* tokens
+   These tokens remain dark in both light AND dark app mode */
+&lt;section style="background:var(--bg-dark); padding:80px 40px;"&gt;
+  &lt;h1 style="font:400 48px/1.1 var(--font-display);
+             color:var(--text-dark-primary); letter-spacing:-.02em;"&gt;
+    Title
+  &lt;/h1&gt;
+  &lt;p style="font:16px/1.6 var(--font-body); color:var(--text-dark-secondary);"&gt;
+    Supporting text.
+  &lt;/p&gt;
+&lt;/section&gt;</code></pre>
+    </section>
+
+    <!-- ANTI-PATTERNS -->
+    <section class="ds-section" id="antipatterns">
+      <div class="eyebrow">Rules</div>
+      <h2 class="section-heading">Anti-Patterns</h2>
+
+      <table class="anti-table">
+        <thead><tr><th>Category</th><th class="dont">Never</th><th class="do">Instead</th></tr></thead>
+        <tbody>
+          <tr><td>Dark mode</td><td class="dont">Hardcoded hex values in components</td><td class="do">Always <code>var(--token)</code> so the theme switch works</td></tr>
+          <tr><td>Dark mode</td><td class="dont">Separate dark-specific component variants</td><td class="do">One component using CSS variables — it adapts automatically</td></tr>
+          <tr><td>Dark mode</td><td class="dont">Flash of wrong theme on load</td><td class="do">Apply theme to <code>&lt;html&gt;</code> in a <code>&lt;script&gt;</code> in <code>&lt;head&gt;</code>, before <code>&lt;body&gt;</code></td></tr>
+          <tr><td>Shadows</td><td class="dont">box-shadow on cards</td><td class="do">1px solid var(--border)</td></tr>
+          <tr><td>Backgrounds</td><td class="dont">Gradient fills</td><td class="do">Flat var(--bg-base), var(--bg-surface), or var(--bg-dark)</td></tr>
+          <tr><td>Orange</td><td class="dont">Orange on headlines, body, large fills</td><td class="do">One inline callout per view, via var(--accent)</td></tr>
+          <tr><td>Charts</td><td class="dont">Inverting chart colors in dark mode</td><td class="do">Chart palette is fixed — same in both themes</td></tr>
+          <tr><td>Code blocks</td><td class="dont">Light background on code blocks in dark mode</td><td class="do">Code blocks are always dark (#141416) regardless of theme</td></tr>
+          <tr><td>Typography</td><td class="dont">Bold entire headings</td><td class="do">Normal (400) weight; bold only a single word or stat</td></tr>
+          <tr><td>Icons</td><td class="dont">Icon libraries</td><td class="do">Text labels, data, product screenshots</td></tr>
+          <tr><td>Copy</td><td class="dont">"AI-powered", "seamless", "robust", "next-generation"</td><td class="do">Specific outcomes: "3&times; faster", "85% adoption"</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section class="ds-section" id="checklist">
+      <div class="eyebrow">Quality</div>
+      <h2 class="section-heading">Pre-Delivery Checklist</h2>
+
+      <div class="three-col">
+        <div class="demo-box">
+          <div style="font:500 13px var(--font-body);color:var(--text-primary);margin-bottom:14px;">Dark Mode</div>
+          <ul style="font:14px/1.8 var(--font-body);color:var(--text-secondary);padding-left:18px;">
+            <li>No hardcoded hex in components — all <code>var(--token)</code></li>
+            <li>Toggle tested in both modes</li>
+            <li>No flash on page load (script in head)</li>
+            <li>OS preference respected on first visit</li>
+            <li>Status badges readable in dark mode</li>
+            <li>Code blocks stay dark in both modes</li>
+          </ul>
+        </div>
+        <div class="demo-box">
+          <div style="font:500 13px var(--font-body);color:var(--text-primary);margin-bottom:14px;">Visual</div>
+          <ul style="font:14px/1.8 var(--font-body);color:var(--text-secondary);padding-left:18px;">
+            <li>Text contrast passes AA in both modes</li>
+            <li>Orange NOT on body text or large fills</li>
+            <li>Max one orange element per section</li>
+            <li>No box-shadow on cards</li>
+            <li>No gradient fills</li>
+            <li>Every section breathes — 16px min gap</li>
+          </ul>
+        </div>
+        <div class="demo-box">
+          <div style="font:500 13px var(--font-body);color:var(--text-primary);margin-bottom:14px;">Structure &amp; Copy</div>
+          <ul style="font:14px/1.8 var(--font-body);color:var(--text-secondary);padding-left:18px;">
+            <li>Self-contained HTML (no CDN calls)</li>
+            <li>Max 2 font weights per view</li>
+            <li>Display font for stat numbers (not mono)</li>
+            <li>Structural eyebrows use <code>var(--text-muted)</code></li>
+            <li>Headlines lead with the takeaway</li>
+            <li>No "AI-powered", "seamless", "robust"</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid var(--border);padding:24px 40px;">
+      <p style="font:12px var(--font-body);color:var(--text-muted);">Cursor Design System — Light &amp; Dark · Internal reference for AI-assisted development · July 2026</p>
+    </footer>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<!-- Theme JS: controls the toggle button label + icon, and persists preference -->
+<script>
+  function getStoredTheme() {
+    return localStorage.getItem('cursor-theme');
+  }
+
+  function getPreferredTheme() {
+    return getStoredTheme() ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('cursor-theme', theme);
+    var isDark = theme === 'dark';
+    var icon = document.getElementById('theme-icon');
+    var btnLabel = document.getElementById('theme-btn-label');
+    var pageLabel = document.getElementById('theme-label');
+    if (icon) icon.textContent = isDark ? '\u2600' : '\u263D';
+    if (btnLabel) btnLabel.textContent = isDark ? 'Light mode' : 'Dark mode';
+    if (pageLabel) pageLabel.textContent = isDark ? 'Dark' : 'Light';
+  }
+
+  function toggleTheme() {
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    applyTheme(current === 'dark' ? 'light' : 'dark');
+  }
+
+  // Init on load
+  applyTheme(getPreferredTheme());
+
+  // React to OS changes (only if user hasn't manually set a preference)
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    if (!getStoredTheme()) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+</script>
+
+</body>
+</html>

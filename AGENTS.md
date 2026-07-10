@@ -23,3 +23,4 @@ This is a self-contained Next.js 16 finance dashboard with no external services 
 - The dev server uses Turbopack and starts very quickly (~250ms). No environment variables or `.env` files are needed.
 - Only the Overview page (`/`) has real content; other sidebar pages (Transactions, Budgets, Pots, Recurring Bills) are placeholders.
 - There are no automated tests configured in this project — only `npm run lint` for quality checks.
+- **UI source of truth:** `docs/cursor-design-system.html` (Cursor Design System v3). It takes priority over the Figma personal-finance-app file when styles conflict. See `.cursor/rules/cursor-design-system.mdc`.
