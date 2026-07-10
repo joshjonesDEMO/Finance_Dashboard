@@ -17,5 +17,5 @@ export function getBudgetsAtRisk(budgets: Budget[], limit = 3): Budget[] {
   const sorted = [...budgets].sort(
     (a, b) => a.maximum - a.spent - (b.maximum - b.spent),
   );
-  return sorted.slice(0, limit + 1);
+  return sorted.slice(0, limit);
 }
