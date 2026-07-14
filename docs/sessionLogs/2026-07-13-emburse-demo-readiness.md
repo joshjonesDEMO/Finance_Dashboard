@@ -52,6 +52,10 @@ lives outside the repo.
 
 ## Follow-ups / known gaps
 
+- [x] Rewrote root + nested `BUGBOT.md` to read as real Emburse product
+      standards (money correctness, secrets, bounded retries) — removed
+      meta “demo planted issue” language so Phase 0 holds up in front of
+      the team
 - [ ] Dry-run: Agent Review + `/review-bugbot` on branch before the call
 - [ ] Open PR `July_16_Bugbot_CloudAgent` → `UI-refactor` and confirm Bugbot
       comments
