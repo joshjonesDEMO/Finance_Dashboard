@@ -57,7 +57,52 @@ Say: "This is the setup layer you haven't tuned yet. Once these are in, every re
 
 Goal: show the loop starts locally, so fewer issues even reach review.
 
-1. Make a small change in the editor with Agent (Composer). Keep it realistic for their stack.
+**Branch:** `July_16_Bugbot_CloudAgent` → `UI-refactor` (see
+[`Emburse_Demo_Checklist.md`](Emburse_Demo_Checklist.md)). The branch already
+includes planted issues in `backend/lib/transactionSync.ts` (hardcoded bearer
+token + unbounded retry). The live edit below **adds to** that module — do not
+fix those bugs yet; that is Phases 3–4.
+
+### Best live change (recommended)
+
+Add API response validation to the existing sync module. Realistic for Emburse,
+fast (~2–4 min agent time), and keeps the planted secret/retry in the diff so
+Bugbot has rich findings to work with in Phases 2–4.
+
+**Agent prompt:**
+
+> Add a `validateTransactionBatch` helper in `backend/lib/transactionSync.ts`
+> that checks each batch has an `id`, positive `amount`, and non-empty
+> `merchant`. Call it in `fetchTransactionBatch` before returning. This is prep
+> for Emburse expense ingest — don't wire it into the Next.js app yet.
+
+**Why this change**
+
+| Criterion | How it lands |
+| --- | --- |
+| Interesting | Real integration work — validating untrusted API payloads |
+| Fast | One helper + a few lines in `fetchTransactionBatch` |
+| Bugbot-rich | Planted secret and retry stay in the diff; nested `backend/.cursor/BUGBOT.md` can flag missing tests for the new validation path |
+| On-narrative | Matches Phase 0 guardrails (secrets, bounded retries, validate before use) |
+| Safe | Avoids `lib/format.ts` / `lib/data.ts` — bugs there fail CI and upstage Bugbot |
+
+**Alternative (richer findings):** ask Agent to add Vitest tests for the happy
+path only (“don't change the retry logic yet”). Bugbot can then flag the secret,
+unbounded retry, *and* incomplete retry/backoff test coverage.
+
+**Avoid during the demo:** full Transactions page (too slow), fixing
+`lib/insights.ts` (different story), “fix all issues” in Phase 1 (kills later
+phases), or wiring sync into the app via an API route (extra scope, same
+Bugbot payoff).
+
+**One-liner for the audience:** “We're adding Emburse expense sync validation —
+the kind of small integration change that ships hundreds of times a week, and
+exactly where secrets and retry logic tend to slip through.”
+
+### Steps
+
+1. Run the prompt above (or the test alternative) in Agent (Composer) on
+   `backend/lib/transactionSync.ts`.
 2. Run **Agent Review** on your local changes to get a dedicated review of the diff before you push.
 3. Run the `/review-bugbot` skill in the agent to run the same Bugbot analysis locally against your branch. Point out it reviews your branch changes against the base branch.
 4. Call out the sync behavior: `/review-bugbot` stores the patch ID of the reviewed diff, so when you open the PR with the same diff, Bugbot recognizes it and skips a duplicate review.
