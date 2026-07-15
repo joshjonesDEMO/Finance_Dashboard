@@ -133,10 +133,9 @@
   <div class="agenda-grid">
     <div class="agenda-title">Agenda</div>
     <div class="agenda-list">
-      <div class="agenda-row"><span class="txt">Bugbot deep dive: setup and best practices</span><span class="num">01</span></div>
-      <div class="agenda-row"><span class="txt">The autonomous review loop</span><span class="num">02</span></div>
-      <div class="agenda-row"><span class="txt">Choosing your automation level</span><span class="num">03</span></div>
-      <div class="agenda-row"><span class="txt">Guardrails and rollout plan</span><span class="num">04</span></div>
+      <div class="agenda-row"><span class="txt">How Bugbot fits into the Cursor workflow and reviews PRs</span><span class="num">01</span></div>
+      <div class="agenda-row"><span class="txt">Best practices for customer teams</span><span class="num">02</span></div>
+      <div class="agenda-row"><span class="txt">How Cloud Agents act on findings in the web or via PRs</span><span class="num">03</span></div>
     </div>
   </div>
   <div class="foot"><svg class="logo" fill="#0C0C0D"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
@@ -155,7 +154,33 @@
   <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
 </section>
 
-<!-- 5 FEATURE GRID -->
+<!-- 4 METRICS -->
+<section class="slide">
+  <div class="eyebrow">Emburse today</div>
+  <h2>Detection is working. Resolution is the gap.</h2>
+  <div class="cards">
+    <div class="card"><div class="val">~1,600</div><div class="rule"></div><div class="lab">PRs reviewed per week</div><div class="desc">Bugbot runs automatically on every pull request</div></div>
+    <div class="card"><div class="val">3</div><div class="rule"></div><div class="lab">Finding categories</div><div class="desc">Bugs, security issues, and code-quality problems flagged inline</div></div>
+    <div class="card"><div class="val">Manual</div><div class="rule"></div><div class="lab">Resolution today</div><div class="desc">Engineers still open, fix, and re-review by hand</div></div>
+  </div>
+  <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
+</section>
+
+<!-- 5 WORKFLOW -->
+<section class="slide">
+  <h2>Bugbot in the Cursor workflow</h2>
+  <div class="sub">Same review engine, from the editor to GitHub</div>
+  <div class="steps">
+    <div class="step"><div class="num">01</div><div class="ac">Local</div><div class="h">Review before you push</div><div class="d">Agent Review and /review-bugbot run the same analysis on your branch diff in the editor</div></div>
+    <div class="arrow">&#8250;</div>
+    <div class="step"><div class="num">02</div><div class="ac">GitHub</div><div class="h">Review on the PR</div><div class="d">Bugbot posts inline comments with explanations and fix suggestions on every PR</div></div>
+    <div class="arrow">&#8250;</div>
+    <div class="step"><div class="num">03</div><div class="ac">CI</div><div class="h">Check blocks merge</div><div class="d">The Cursor Bugbot status check and branch protection fail on unresolved high-severity findings</div></div>
+  </div>
+  <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
+</section>
+
+<!-- 6 FEATURE GRID -->
 <section class="slide">
   <h2>Bugbot best practices</h2>
   <div class="sub">Get more signal, less noise, before we automate</div>
@@ -170,14 +195,39 @@
   <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
 </section>
 
-<!-- 6 STEPS -->
+<!-- 7 THREE WAYS -->
+<section class="slide">
+  <h2>Three ways to resolve a finding</h2>
+  <div class="sub">Same finding, escalating levels of autonomy</div>
+  <div class="cols">
+    <div class="col"><div class="head">Fix in Cursor</div><div class="tag"></div><ul><li>Click the link on a Bugbot comment</li><li>Agent proposes the fix in the editor</li><li>You review the diff and accept</li></ul></div>
+    <div class="col"><div class="head">Fix in Web</div><div class="tag"></div><ul><li>Open cursor.com/agents from the finding</li><li>Cloud Agent investigates in the background</li><li>Watch the plan and diff as it works</li></ul></div>
+    <div class="col hi"><div class="head">Autofix</div><div class="tag">Hands-off</div><ul><li>Bugbot spawns a Cloud Agent automatically</li><li>Agent pushes a fix to a new branch</li><li>Results posted back on the original PR</li></ul></div>
+  </div>
+  <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
+</section>
+
+<!-- 8 CLOUD AGENTS -->
+<section class="slide">
+  <h2>Cloud Agents: investigate and fix</h2>
+  <div class="sub">Async agents that act on Bugbot findings without blocking the developer</div>
+  <ul class="bullets">
+    <li>Investigate: reads the finding, traces context, and proposes a targeted fix</li>
+    <li>Work async: runs in the background in the Agents window at cursor.com/agents</li>
+    <li>Deliver via PR: opens or updates a branch and comments the result on the original PR</li>
+    <li>Human at the gate: engineer reviews the agent branch, approves, and merges</li>
+  </ul>
+  <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
+</section>
+
+<!-- 9 STEPS -->
 <section class="slide">
   <h2>The autonomous review loop</h2>
   <div class="sub">From a finding to a merged fix, with a human at the gate</div>
   <div class="steps">
     <div class="step"><div class="num">01</div><div class="ac">Detect</div><div class="h">Bugbot reviews the PR</div><div class="d">Flags bugs, security, and quality issues with fix suggestions</div></div>
     <div class="arrow">&#8250;</div>
-    <div class="step"><div class="num">02</div><div class="ac">Resolve</div><div class="h">Cloud Agent fixes it</div><div class="d">Autofix spawns a Cloud Agent that pushes a fix to a new branch</div></div>
+    <div class="step"><div class="num">02</div><div class="ac">Resolve</div><div class="h">Cloud Agent investigates and fixes</div><div class="d">Agent traces the issue, pushes a fix to a new branch, and updates the PR</div></div>
     <div class="arrow">&#8250;</div>
     <div class="step"><div class="num">03</div><div class="ac">Verify</div><div class="h">Re-review and test</div><div class="d">The fix re-enters Bugbot review and your test suite</div></div>
     <div class="arrow">&#8250;</div>
@@ -186,7 +236,7 @@
   <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
 </section>
 
-<!-- 7 COMPARISON -->
+<!-- 10 COMPARISON -->
 <section class="slide">
   <h2>Choosing your automation level</h2>
   <div class="sub">Same loop, different amount of human oversight</div>
@@ -198,7 +248,7 @@
   <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
 </section>
 
-<!-- 8 GUARDRAILS -->
+<!-- 11 GUARDRAILS -->
 <section class="slide">
   <div class="eyebrow">Built for scale</div>
   <h2>Guardrails for an AI-forward organization</h2>
@@ -212,7 +262,7 @@
   <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
 </section>
 
-<!-- 9 TIMELINE -->
+<!-- 12 TIMELINE -->
 <section class="slide">
   <h2>A phased rollout</h2>
   <div class="sub">Crawl, walk, run as confidence and process evolve</div>
@@ -225,14 +275,14 @@
   <div class="foot"><svg class="logo" fill="#fff"><use href="#cube"/></svg>Emburse x Cursor &nbsp; July 2026</div>
 </section>
 
-<!-- 10 STATEMENT -->
+<!-- 13 STATEMENT -->
 <section class="slide stmt">
   <div class="stmt-bg"></div>
   <div class="stmt-txt">Move from finding issues to resolving them, without taking humans out of the decision.</div>
   <div class="foot"><svg class="logo" fill="#0C0C0D"><use href="#cube"/></svg></div>
 </section>
 
-<!-- 11 CLOSING -->
+<!-- 14 CLOSING -->
 <section class="slide">
   <div class="close-title">Next steps</div>
   <ul class="close-list">
@@ -249,7 +299,7 @@
 </div>
 </div>
 
-<div class="counter" id="counter">1 / 11</div>
+<div class="counter" id="counter">1 / 14</div>
 <div class="nav"><button id="prev">Prev</button><button id="next">Next</button></div>
 
 <script>

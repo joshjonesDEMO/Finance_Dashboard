@@ -1,7 +1,9 @@
 # Emburse x Cursor: In-Cursor Demo Flow
 ### Review to resolution, shown live in the product
 
-This is the hands-on companion to the deck. The deck explains the loop; this walks one change through it inside Cursor, following the review-and-resolution phase of the SDLC end to end. Run it as a live demo, driving Cursor and one pull request while you narrate.
+This is the hands-on companion to `docs/Emburse_Presentation.html`. The deck frames the story; this walks one change through it inside Cursor. Run it as a live demo, driving Cursor and one pull request while you narrate.
+
+**Related:** deck talk track in [`Emburse_Presentation_Talk_Track.md`](Emburse_Presentation_Talk_Track.md)
 
 **What to have ready before the call**
 - A sample repo open in Cursor with Bugbot enabled on it
@@ -10,11 +12,33 @@ This is the hands-on companion to the deck. The deck explains the loop; this wal
 - The Bugbot dashboard open in a browser tab
 - A connected public Slack channel if you want to show the notify-and-trigger step
 
-**The through line to repeat:** the developer never leaves Cursor. A finding becomes a fix becomes a merged PR, with a human at the gate.
+**The through line to repeat:** a finding is investigated, fixed in the editor or on the web, and lands as a merged PR — with a human at the gate.
+
+---
+
+## Deck slide map
+
+Use this to stay aligned with the presentation while you demo.
+
+| Deck slide | Topic | Demo phase |
+| --- | --- | --- |
+| 1 | Title | — |
+| 2 | Agenda | Open with the three invite topics |
+| 3 | The bottleneck | Set context before Phase 2 |
+| 4 | Emburse metrics | Reference ~1,600 PRs/week when Bugbot comments appear |
+| 5 | Bugbot in the Cursor workflow | Phases 1–2 (local review → PR review → CI check) |
+| 6 | Bugbot best practices | Phase 0 (rules and BUGBOT.md) |
+| 7 | Three ways to resolve | Phase 3 (Fix in Cursor, Fix in Web, Autofix) |
+| 8 | Cloud Agents: investigate and fix | Phases 3–4 (investigation, async Agents window, PR delivery) |
+| 9 | Autonomous review loop | Phase 4 (Detect → Resolve → Verify → Approve) |
+| 10 | Automation levels | Phase 5 |
+| 11–14 | Guardrails, rollout, next steps | Close after Phase 6 |
 
 ---
 
 ## Phase 0. Set the guardrails once (2 min)
+
+**Deck:** slide 6 (Bugbot best practices)
 
 Goal: show that quality standards live in the repo and are enforced automatically, not tribal knowledge.
 
@@ -29,6 +53,8 @@ Say: "This is the setup layer you haven't tuned yet. Once these are in, every re
 
 ## Phase 1. Catch it before the PR, in the editor (3 min)
 
+**Deck:** slide 5, step 01 (Local — review before you push)
+
 Goal: show the loop starts locally, so fewer issues even reach review.
 
 1. Make a small change in the editor with Agent (Composer). Keep it realistic for their stack.
@@ -42,46 +68,54 @@ Say: "Best case, the issue is fixed before a reviewer ever sees it. Same engine,
 
 ## Phase 2. Open the PR, Bugbot reviews automatically (2 min)
 
+**Deck:** slides 4–5, steps 02–03 (GitHub review + CI check)
+
 Goal: show detection with no manual trigger.
 
 1. Push the branch and open the PR (or use one that is pre-staged with issues that were not caught locally).
 2. Show Bugbot posting inline comments with an explanation and a fix suggestion for each finding.
 3. Show the `Cursor Bugbot` check on the PR. Explain branch protection: require this check, and enable fail-on-unresolved so high-severity findings actually block merge (findings default to neutral otherwise).
 
-Say: "This is what already happens on about 1,600 of your PRs a week. The question is what happens next."
+Say: "This is what already happens on about 1,600 of your PRs a week. Detection is working — the question is what happens next."
 
 ---
 
-## Phase 3. From finding to fix, without leaving Cursor (4 min)
+## Phase 3. Three ways to resolve a finding (4 min)
 
-Goal: show the three ways to resolve a finding, escalating in autonomy.
+**Deck:** slides 7–8 (Three ways to resolve + Cloud Agents investigate and fix)
+
+Goal: show escalating autonomy on the same finding, with investigation before the fix.
 
 1. **Fix in Cursor** — click the link on a Bugbot comment to open the issue directly in the editor, let Agent propose the fix, review the diff, accept.
-2. **Fix in Web** — click through to cursor.com/agents to have a Cloud Agent take the same finding and work it in the background.
-3. **Autofix** — show the Bugbot Autofix setting. When enabled, Bugbot spawns a Cloud Agent automatically, pushes the fix to a new branch, and comments the result back on the PR.
+2. **Fix in Web** — click through to cursor.com/agents. Show the Cloud Agent **investigate** the finding: read context, form a plan, and work the fix in the background while you watch the Agents window.
+3. **Autofix** — show the Bugbot Autofix setting. When enabled, Bugbot spawns a Cloud Agent automatically, investigates the issue, pushes the fix to a new branch, and comments the result back on the PR.
 
 Point out the recommended posture: Autofix to a **new branch**, not the PR branch, so nothing merges unreviewed. Existing-branch mode is capped at 3 attempts to prevent loops.
 
-Say: "Same finding, three levels of hands-on. You choose how much the human does versus how much the agent does."
+Say: "Same finding, three levels of hands-on. The agent investigates first, then proposes the fix — in the editor, on the web, or automatically."
 
 ---
 
 ## Phase 4. Watch the loop close (3 min)
 
-Goal: show the full autonomous cycle in the Agents window.
+**Deck:** slides 8–9 (Cloud Agents + autonomous review loop)
 
-1. Open cursor.com/agents and show the Cloud Agent that Autofix spawned, its plan, and the diff it produced.
+Goal: show the full async cycle in the Agents window and how the fix returns via PR.
+
+1. Open cursor.com/agents and show the Cloud Agent run: its investigation, plan, and the diff it produced.
 2. Show the fix landing on a new branch and Bugbot re-reviewing that change.
 3. Show the test suite running against the fix.
 4. Land on the human step: the engineer reviews the agent's branch, approves, and merges.
 
-The visible loop: **Detect (Bugbot) to Resolve (Cloud Agent) to Verify (re-review plus tests) to Approve (human merges).**
+The visible loop: **Detect (Bugbot) → Resolve (Cloud Agent investigates and fixes) → Verify (re-review plus tests) → Approve (human merges).**
 
 ---
 
 ## Phase 5. Automate the trigger to match their appetite (3 min)
 
-Goal: show they control when the loop fires, tied to the three automation levels from the deck.
+**Deck:** slide 10 (Choosing your automation level)
+
+Goal: show they control when the loop fires.
 
 1. Run the `/automate` skill and describe the workflow in plain language, or open cursor.com/automations.
 2. Show the trigger options that map to their appetite:
@@ -95,6 +129,8 @@ Say: "Start risk-tiered. Expand what auto-fixes as trust builds. Every one of th
 ---
 
 ## Phase 6. Approve and merge (1 min)
+
+**Deck:** slides 11–14 (guardrails, rollout, next steps)
 
 1. Back on the PR, show the resolved Bugbot comments and the passing check.
 2. Approve and merge.

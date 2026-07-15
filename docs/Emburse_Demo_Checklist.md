@@ -57,20 +57,20 @@ track; this file is the go/no-go list.
 
 ---
 
-## Live click path (maps to outline phases)
+## Live click path (maps to outline phases and deck slides)
 
-| Phase | Time | What to do |
-| --- | --- | --- |
-| **0 — Guardrails** | 2 min | Open `.cursor/BUGBOT.md` → `backend/.cursor/BUGBOT.md` → dashboard Team Rules + scoped `backend/**` rule. Mention `@cursor remember [fact]` on PRs. |
-| **1 — Local review** | 3 min | Small Agent edit in `backend/`. Run **Agent Review**, then `/review-bugbot`. Note patch-ID skip on PR open. |
-| **2 — PR review** | 2 min | Push branch, open PR → `UI-refactor`. Show Bugbot inline comments + `Cursor Bugbot` check. |
-| **3 — Fix paths** | 4 min | **Fix in Cursor** (comment link) → **Fix in Web** (Agents) → show **Autofix** setting (new branch). |
-| **4 — Loop closes** | 3 min | Agents window: plan, diff, new branch. Bugbot re-review + `npm test`. Human approves. |
-| **5 — Automations** | 3 min | `/automate` or cursor.com/automations. Show full auto / notify-trigger / risk-tiered. Team Owned billing. |
-| **6 — Merge** | 1 min | Resolved comments, passing check, approve and merge. Cite review-time saved. |
+| Phase | Deck | Time | What to do |
+| --- | --- | --- | --- |
+| **0 — Guardrails** | 6 | 2 min | Open `.cursor/BUGBOT.md` → `backend/.cursor/BUGBOT.md` → dashboard Team Rules + scoped `backend/**` rule. Mention `@cursor remember [fact]` on PRs. |
+| **1 — Local review** | 5 | 3 min | Small Agent edit in `backend/`. Run **Agent Review**, then `/review-bugbot`. Note patch-ID skip on PR open. |
+| **2 — PR review** | 4–5 | 2 min | Push branch, open PR → `UI-refactor`. Show Bugbot inline comments + `Cursor Bugbot` check. Cite ~1,600 PRs/week. |
+| **3 — Fix paths** | 7–8 | 4 min | **Fix in Cursor** (comment link) → **Fix in Web** (Agents, show investigation) → show **Autofix** setting (new branch). |
+| **4 — Loop closes** | 8–9 | 3 min | Agents window: investigation, plan, diff, new branch. Bugbot re-review + `npm test`. Human approves. |
+| **5 — Automations** | 10 | 3 min | `/automate` or cursor.com/automations. Show full auto / notify-trigger / risk-tiered. Team Owned billing. |
+| **6 — Merge** | 11–14 | 1 min | Resolved comments, passing check, approve and merge. Cite review-time saved. |
 
-**Through line:** the developer never leaves Cursor. A finding becomes a fix
-becomes a merged PR, with a human at the gate.
+**Through line:** a finding is investigated, fixed in the editor or on the web,
+and lands as a merged PR — with a human at the gate.
 
 ---
 
