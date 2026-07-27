@@ -12,14 +12,15 @@ This is a self-contained Next.js 16 finance dashboard with no external services 
 
 | Action | Command |
 |--------|---------|
-| Install deps | `npm install` |
-| Dev server | `npm run dev` (Turbopack, port 3000) |
+| Install deps | `npm ci` (or `npm install`) |
+| Dev server | `npm run dev` (webpack, port 3000) |
 | Lint | `npm run lint` (ESLint flat config) |
-| Build | `npm run build` |
+| Test | `npm run test` (Vitest, jsdom) |
+| Build | `npm run build` (uses Turbopack) |
 
 ### Notes
 
-- Node.js 22 LTS is used (managed via nvm). The update script handles `nvm install 22 --default` and `npm install`.
-- The dev server uses Turbopack and starts very quickly (~250ms). No environment variables or `.env` files are needed.
+- Node.js 22 is already the default in this environment; no nvm step is needed. The update script runs `npm ci` against the committed `package-lock.json` (leaves a clean git tree; `npm install` also works but rewrites a benign `libc` diff into the lockfile).
+- `npm run dev` runs the webpack dev server (starts in ~250ms); `npm run dev:turbo` uses Turbopack. No environment variables or `.env` files are needed. Sentry is opt-in via `npm run dev:sentry`.
 - Only the Overview page (`/`) has real content; other sidebar pages (Transactions, Budgets, Pots, Recurring Bills) are placeholders.
-- There are no automated tests configured in this project — only `npm run lint` for quality checks.
+- Tests are Vitest + Testing Library under `tests/` (run with `npm run test`, watch with `npm run test:watch`).
