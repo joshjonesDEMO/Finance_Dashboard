@@ -24,3 +24,4 @@ This is a self-contained Next.js 16 finance dashboard with no external services 
 - `npm run dev` runs the webpack dev server (starts in ~250ms); `npm run dev:turbo` uses Turbopack. No environment variables or `.env` files are needed. Sentry is opt-in via `npm run dev:sentry`.
 - Only the Overview page (`/`) has real content; other sidebar pages (Transactions, Budgets, Pots, Recurring Bills) are placeholders.
 - Tests are Vitest + Testing Library under `tests/` (run with `npm run test`, watch with `npm run test:watch`).
+- GitHub Actions CI (`.github/workflows/ci.yml`) runs `lint`, `test`, and `build` on every PR. Demo pass/fail overrides live in `.github/ci-demo.yml`.

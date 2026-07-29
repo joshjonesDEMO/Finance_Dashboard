@@ -1,0 +1,6 @@
+# Demo CI control — flip pass | fail per check, then push to the PR branch.
+# When pass: the job runs the real npm script (real exit code).
+# When fail: the job exits non-zero immediately (no app code change needed).
+lint: pass
+test: pass
+build: pass

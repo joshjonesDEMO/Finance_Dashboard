@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Resolve demo outcome
+        id: demo
+        run: |
+          value=$(grep -E '^lint:' .github/ci-demo.yml | awk '{print $2}' | tr -d '\r')
+          echo "value=${value}" >> "$GITHUB_OUTPUT"
+          case "${value}" in
+            pass|fail) ;;
+            *)
+              echo "::error::Invalid lint value in .github/ci-demo.yml: '${value}' (expected pass or fail)"
+              exit 1
+              ;;
+          esac
+      - name: Forced demo failure
+        if: steps.demo.outputs.value == 'fail'
+        run: |
+          echo "::error::Forced failure via .github/ci-demo.yml (lint: fail)"
+          exit 1
+      - name: Run lint
+        if: steps.demo.outputs.value == 'pass'
+        run: npm run lint
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Resolve demo outcome
+        id: demo
+        run: |
+          value=$(grep -E '^test:' .github/ci-demo.yml | awk '{print $2}' | tr -d '\r')
+          echo "value=${value}" >> "$GITHUB_OUTPUT"
+          case "${value}" in
+            pass|fail) ;;
+            *)
+              echo "::error::Invalid test value in .github/ci-demo.yml: '${value}' (expected pass or fail)"
+              exit 1
+              ;;
+          esac
+      - name: Forced demo failure
+        if: steps.demo.outputs.value == 'fail'
+        run: |
+          echo "::error::Forced failure via .github/ci-demo.yml (test: fail)"
+          exit 1
+      - name: Run unit tests
+        if: steps.demo.outputs.value == 'pass'
+        run: npm test
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Resolve demo outcome
+        id: demo
+        run: |
+          value=$(grep -E '^build:' .github/ci-demo.yml | awk '{print $2}' | tr -d '\r')
+          echo "value=${value}" >> "$GITHUB_OUTPUT"
+          case "${value}" in
+            pass|fail) ;;
+            *)
+              echo "::error::Invalid build value in .github/ci-demo.yml: '${value}' (expected pass or fail)"
+              exit 1
+              ;;
+          esac
+      - name: Forced demo failure
+        if: steps.demo.outputs.value == 'fail'
+        run: |
+          echo "::error::Forced failure via .github/ci-demo.yml (build: fail)"
+          exit 1
+      - name: Run build
+        if: steps.demo.outputs.value == 'pass'
+        run: npm run build

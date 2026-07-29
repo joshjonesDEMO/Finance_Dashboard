@@ -16,5 +16,5 @@ See docs/sessionLogs/README.md for the convention.
 - [ ] A session log in `docs/sessionLogs/` was added or updated for this work
 - [ ] The log captures goal, approach, alternatives, key decisions, and tradeoffs
 - [ ] No secrets or credentials are included in the log
-- [ ] `npm run lint` passes
-- [ ] `npm run build` passes
+- [ ] CI checks pass (`lint`, `test`, `build` via GitHub Actions)
+- [ ] Demo outcomes (if needed) are set in `.github/ci-demo.yml` (`pass` / `fail` per check)
