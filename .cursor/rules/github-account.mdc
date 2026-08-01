@@ -1,0 +1,20 @@
+---
+description: Always use the joshjonesDEMO GitHub account for commits, pushes, and GitHub API calls in this repo
+alwaysApply: true
+---
+
+# GitHub account: joshjonesDEMO
+
+All GitHub activity in this repo (commits, pushes, branch/PR operations, `gh` API calls) must use the **joshjonesDEMO** account, never `joshjones-cursor`.
+
+- Commits must be authored as `joshjonesDEMO <292586785+joshjonesDEMO@users.noreply.github.com>`. If `git config user.name` reports anything else, set it locally before committing.
+- The `joshjones-cursor` gh account has **no write access** to `joshjonesDEMO/Finance_Dashboard` (pushes fail with 403, API writes with 404).
+- Plain `git push` already authenticates as joshjonesDEMO via a repo-local credential helper (see `.git/config`). Do not remove or override that helper.
+- For `gh` CLI write calls (PRs, API writes), use the joshjonesDEMO token without switching the active gh account:
+
+```bash
+GH_TOKEN=$(gh auth token --user joshjonesDEMO) gh pr create ...
+GH_TOKEN=$(gh auth token --user joshjonesDEMO) gh api -X POST ...
+```
+
+- Never run `gh auth switch` to change the active account; use the one-off `GH_TOKEN` pattern above instead.
