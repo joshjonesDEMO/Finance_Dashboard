@@ -15,9 +15,13 @@ export function RecurringBillsCard({ data }: RecurringBillsCardProps) {
   const upcomingTotal = sumAmounts(
     upcoming.map((t) => ({ amount: Math.abs(t.amount) })),
   );
+  const dueSoonTotal = sumAmounts(
+    dueSoon.map((t) => ({ amount: Math.abs(t.amount) })),
+  );
 
   const paidDisplay = `-${formatCurrency(paidTotal)}`;
   const upcomingDisplay = `-${formatCurrency(upcomingTotal)}`;
+  const dueSoonDisplay = `-${formatCurrency(dueSoonTotal)}`;
 
   return (
     <Card>
@@ -54,8 +58,8 @@ export function RecurringBillsCard({ data }: RecurringBillsCardProps) {
               {dueSoon.length} bills
             </p>
           </div>
-          <p className="text-preset-1 font-bold tracking-tight text-grey-900">
-            {dueSoon.length}
+          <p className="text-preset-2 font-bold text-secondary-red">
+            {dueSoonDisplay}
           </p>
         </li>
       </ul>
