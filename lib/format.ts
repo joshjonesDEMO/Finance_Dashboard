@@ -1,4 +1,8 @@
 export function formatCurrency(amount: number, sign: "always" | "auto" = "auto"): string {
+  if (!Number.isFinite(amount)) {
+    return "###";
+  }
+
   const formatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",

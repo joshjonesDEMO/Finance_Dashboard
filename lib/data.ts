@@ -2,7 +2,32 @@ import type { FinanceData, Transaction } from "./types";
 import finance from "@/data/finance.json";
 
 export function getFinanceData(): FinanceData {
-  return finance as FinanceData;
+  const data = finance as FinanceData;
+  // Intentional soft demo bug: corrupt payload so Overview widgets
+  // render empty / ### / Error instead of real finance data.
+  return {
+    ...data,
+    balance: {
+      current: Number.NaN,
+      income: Number.NaN,
+      expenses: Number.NaN,
+    },
+    transactions: [],
+    pots: [
+      {
+        name: "Error",
+        target: Number.NaN,
+        total: Number.NaN,
+        theme: data.pots[0]?.theme ?? "green",
+      },
+    ],
+    budgets: data.budgets.map((b) => ({
+      ...b,
+      category: "Error",
+      spent: Number.NaN,
+    })),
+    recurringBills: { paid: [], upcoming: [], dueSoon: [] },
+  };
 }
 
 /** Latest transactions first (by ISO date string) */
