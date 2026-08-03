@@ -2,7 +2,7 @@
 
 - **Date:** 2026-08-03
 - **Author:** joshjonesDEMO
-- **Related PR / branch:** `cursor/josh-10-due-soon-total-29c6`
+- **Related PR / branch:** https://github.com/joshjonesDEMO/Finance_Dashboard/pull/7 (`cursor/josh-10-due-soon-total-29c6`)
 - **Issue / ticket:** [JOSH-10](https://fe-anysphere-demo.atlassian.net/browse/JOSH-10)
 
 ## Problem / goal
