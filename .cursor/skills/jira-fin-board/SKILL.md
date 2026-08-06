@@ -7,9 +7,11 @@ description: "JOSH/finance-dashboard Jira defaults. ALWAYS load this skill when 
 
 ## The only board to use
 
-This codebase always uses the **JOSH** Jira board (project key `JOSH`) in the user's connected Jira account:
+This codebase always uses the **JOSH** Jira board (project key `JOSH`) on the Atlassian site the MCP is connected to:
 
-https://3p-agents.atlassian.net/jira/software/projects/JOSH/list?jql=project%20%3D%20JOSH%20ORDER%20BY%20status%20ASC%2C%20cf%5B10019%5D%20ASC
+https://fe-anysphere-demo.atlassian.net/jira/software/projects/JOSH/list?jql=project%20%3D%20JOSH%20ORDER%20BY%20status%20ASC%2C%20cf%5B10019%5D%20ASC
+
+Site / cloudId for Atlassian MCP calls: `fe-anysphere-demo.atlassian.net` (cloud UUID `564eb250-21c1-45d7-81f9-527d6bf705ad`).
 
 Never create, search, or move issues on any other board from this repo.
 
@@ -25,7 +27,8 @@ Never create, search, or move issues on any other board from this repo.
 
 | Action | Default |
 |--------|---------|
-| Board | [JOSH issue list](https://3p-agents.atlassian.net/jira/software/projects/JOSH/list?jql=project%20%3D%20JOSH%20ORDER%20BY%20status%20ASC%2C%20cf%5B10019%5D%20ASC) |
+| Site / cloudId | `fe-anysphere-demo.atlassian.net` |
+| Board | [JOSH issue list](https://fe-anysphere-demo.atlassian.net/jira/software/projects/JOSH/list?jql=project%20%3D%20JOSH%20ORDER%20BY%20status%20ASC%2C%20cf%5B10019%5D%20ASC) |
 | Project key | `JOSH` |
 | JQL scope | `project = JOSH` |
 | Issue key prefix | `JOSH-` |
@@ -35,7 +38,7 @@ Never create, search, or move issues on any other board from this repo.
 Creating an issue:
 
 ```json
-{ "projectKey": "JOSH", "issueType": "Task", "summary": "..." }
+{ "cloudId": "fe-anysphere-demo.atlassian.net", "projectKey": "JOSH", "issueType": "Task", "summary": "..." }
 ```
 
 Searching:
