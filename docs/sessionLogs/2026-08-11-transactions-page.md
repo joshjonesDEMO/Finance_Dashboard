@@ -29,8 +29,8 @@ Replace the Transactions placeholder with a static, responsive view of all ten t
 
 - **Decision:** Sort a copied array by descending ISO date strings. **Tradeoff:** This relies on the fixture continuing to use normalized ISO dates, but avoids date parsing and leaves the source array untouched.
 - **Decision:** Let stable JavaScript sorting preserve source order for equal dates. **Tradeoff:** There is no secondary alphabetical order, by design.
-- **Decision:** Switch between mobile and four-column rows with card container queries. **Tradeoff:** The breakpoint follows usable card width rather than viewport width, so a narrow expanded sidebar can keep the mobile row layout longer.
-- **Decision:** Use list semantics with a visible four-column header at larger container widths. **Tradeoff:** The header is presentational, while the list label and each item provide the accessible structure.
+- **Decision:** Switch from stacked mobile rows to four-column tablet rows at the viewport `md` breakpoint, then use wider columns at `xl`. **Tradeoff:** The fixed sidebar leaves less table width than the Figma tablet canvas, but the tablet structure now appears consistently at 768px.
+- **Decision:** Use list semantics with a visible four-column header at tablet and desktop viewport widths. **Tradeoff:** The header is presentational, while the list label and each item provide the accessible structure.
 
 ## Follow-ups / known gaps
 
