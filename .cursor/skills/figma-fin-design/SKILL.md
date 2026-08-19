@@ -26,7 +26,7 @@ Convert `-` to `:` in the node-id when calling MCP tools (e.g. `get_design_conte
 4. Before implementing UI from this Figma file, call `get_design_context` on the relevant node, then check the Design System node for matching tokens/components to reuse instead of hardcoding values.
 5. Follow the standard Figma MCP workflow rules: always load `figma-use` before any `use_figma` call, `figma-generate-design` when translating a full page/screen from this file into code, and `figma-generate-diagram` before any `generate_diagram` call.
 6. If the user explicitly gives a different Figma URL, follow it for that turn only — don't change the repo default for subsequent turns.
-7. Only the Overview page (`/`) has real implemented content in this app (per `AGENTS.md`) — the Desktop - Home node is its design reference. Other sidebar pages (Transactions, Budgets, Pots, Recurring Bills) are placeholders in code; check this Figma file for their intended designs before building them out, and flag it if no matching frame exists yet.
+7. Overview (`/`) and Transactions (`/transactions`) have real implemented content from `data/finance.json` (per `AGENTS.md`) — the Desktop - Home node is Overview's design reference. Other sidebar pages (Budgets, Pots, Recurring Bills) are placeholders in code; check this Figma file for their intended designs before building them out, and flag it if no matching frame exists yet.
 
 ## Quick reference
 

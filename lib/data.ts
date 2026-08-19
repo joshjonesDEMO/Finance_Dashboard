@@ -5,15 +5,19 @@ export function getFinanceData(): FinanceData {
   return finance as FinanceData;
 }
 
+/** All transactions, newest first (by ISO date string). */
+export function getAllTransactions(data: FinanceData): Transaction[] {
+  return [...data.transactions].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+}
+
 /** Latest transactions first (by ISO date string) */
 export function getLatestTransactions(
   data: FinanceData,
   limit = 5,
 ): Transaction[] {
-  const sorted = [...data.transactions].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
-  return sorted.slice(0, limit);
+  return getAllTransactions(data).slice(0, limit);
 }
 
 export function sumAmounts(transactions: { amount: number }[]): number {
