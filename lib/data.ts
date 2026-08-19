@@ -5,7 +5,6 @@ export function getFinanceData(): FinanceData {
   return finance as FinanceData;
 }
 
-/** All transactions, newest first (by ISO date string). */
 export function getAllTransactions(data: FinanceData): Transaction[] {
   return [...data.transactions].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
