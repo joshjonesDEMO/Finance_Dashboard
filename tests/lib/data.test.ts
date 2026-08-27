@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getLatestTransactions, sumAmounts } from "@/lib/data";
+import { getAllTransactions, getLatestTransactions, sumAmounts } from "@/lib/data";
 import type { FinanceData, Transaction } from "@/lib/types";
 
 const tx = (date: string, amount = 0, name = date): Transaction => ({
@@ -18,6 +18,32 @@ describe("sumAmounts", () => {
 
   it("sums positive and negative amounts", () => {
     expect(sumAmounts([{ amount: 10 }, { amount: -3 }, { amount: 2.5 }])).toBe(9.5);
+  });
+});
+
+describe("getAllTransactions", () => {
+  const data = {
+    transactions: [
+      tx("2024-01-01", 1, "a"),
+      tx("2024-03-15", 2, "b"),
+      tx("2024-02-10", 3, "c"),
+      tx("2024-05-20", 4, "d"),
+    ],
+  } as unknown as FinanceData;
+
+  it("returns all transactions sorted by date descending", () => {
+    const result = getAllTransactions(data).map((t) => t.name);
+    expect(result).toEqual(["d", "b", "c", "a"]);
+  });
+
+  it("returns every transaction, not a preview slice", () => {
+    expect(getAllTransactions(data)).toHaveLength(4);
+  });
+
+  it("does not mutate the input array", () => {
+    const original = [...data.transactions];
+    getAllTransactions(data);
+    expect(data.transactions).toEqual(original);
   });
 });
 
