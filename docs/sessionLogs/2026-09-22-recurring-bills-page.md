@@ -48,11 +48,17 @@ sortable bills table.
   $194.98), matching the frame; the Overview card keeps its existing
   three-bucket split (only the numbers changed).
 
+## Build: self-hosted font
+
+`next/font/google` in `app/layout.tsx` fetched Public Sans from Google Fonts at
+build time, so `next build` failed in the egress-restricted sandbox
+(`fonts.googleapis.com` / `fonts.gstatic.com` are not on the allowlist). Switched
+to `next/font/local` with the Public Sans variable (latin) woff2 vendored at
+`app/fonts/`, sourced from the `@fontsource-variable/public-sans` npm package.
+Same `--font-public-sans` variable, same weights (100–900), identical rendering,
+and the build no longer makes any external request. `npm run build` now passes.
+
 ## Follow-ups / known gaps
 
-- [ ] `next build` cannot complete in this egress-restricted VM because
-  `next/font/google` in `app/layout.tsx` can't reach Google Fonts (pre-existing,
-  unrelated to this change). Lint, tests, tsc, and the dev server all pass; CI
-  has network access and builds normally.
 - [ ] Tablet/mobile bottom-tab navigation from the Figma frames was
   intentionally not built (out of scope; the shared shell is unchanged).
