@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/Card";
 import { formatCurrency } from "@/lib/format";
 import { sumAmounts } from "@/lib/data";
+import { groupBillsByStatus } from "@/lib/recurring";
 import type { FinanceData } from "@/lib/types";
 
 type RecurringBillsCardProps = {
@@ -8,12 +9,10 @@ type RecurringBillsCardProps = {
 };
 
 export function RecurringBillsCard({ data }: RecurringBillsCardProps) {
-  const { paid, upcoming, dueSoon } = data.recurringBills;
-  const paidTotal = sumAmounts(
-    paid.map((t) => ({ amount: Math.abs(t.amount) })),
-  );
+  const { paid, upcoming, dueSoon } = groupBillsByStatus(data.recurringBills);
+  const paidTotal = sumAmounts(paid.map((bill) => ({ amount: bill.amount })));
   const upcomingTotal = sumAmounts(
-    upcoming.map((t) => ({ amount: Math.abs(t.amount) })),
+    upcoming.map((bill) => ({ amount: bill.amount })),
   );
 
   const paidDisplay = `-${formatCurrency(paidTotal)}`;
