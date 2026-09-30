@@ -42,6 +42,11 @@ describe("RecurringBillsCard", () => {
     expect(screen.getByText("-$1,200.00")).toBeInTheDocument();
   });
 
+  it("computes the due soon total as a negative dollar amount", () => {
+    render(<RecurringBillsCard data={data} />);
+    expect(screen.getByText("-$185.00")).toBeInTheDocument();
+  });
+
   it("renders bill counts for each section", () => {
     render(<RecurringBillsCard data={data} />);
     expect(screen.getByText("2 bills")).toBeInTheDocument();
