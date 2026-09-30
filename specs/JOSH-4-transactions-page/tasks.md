@@ -1,7 +1,7 @@
 # Tasks: JOSH-4 Transactions page
 
 - **Plan:** [plan.md](./plan.md)
-- **Status:** Draft
+- **Status:** Approved
 
 Legend: `[ ]` todo, `[x]` done (its check passed), `[?]` blocked on a spec/plan question, `[!]` escalated.
 
@@ -68,3 +68,4 @@ Every task covers at least one requirement, and every requirement has at least o
 ## Log
 
 - 2026-09-30. Status: Draft. Tasks drafted with the plan.
+- 2026-09-30. Status: Approved. Gate 3 approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790777211249139).

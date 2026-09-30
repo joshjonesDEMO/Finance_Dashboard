@@ -1,7 +1,7 @@
 # Plan: JOSH-4 Transactions page
 
 - **Spec:** [spec.md](./spec.md) (Status: Spec approved)
-- **Status:** Draft
+- **Status:** Approved
 
 ## Constitution check
 
@@ -121,3 +121,4 @@ Nothing outside this list is touched.
 ## Log
 
 - 2026-09-30. Status: Draft. Plan drafted after Gate 1.
+- 2026-09-30. Status: Approved. Gate 2 approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790777211249139).

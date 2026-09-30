@@ -1,6 +1,6 @@
 # JOSH-4: Transactions page
 
-- **Status:** Spec approved
+- **Status:** In progress
 - **Track:** Full. A new page, 4+ new or changed files, and new client-side list logic.
 - **Feature ID:** JOSH-4-transactions-page
 - **Branch:** `cursor/josh-4-transactions-page` (from `origin/main`)
@@ -151,3 +151,5 @@ Answered at Gate 1 by U0BM4GCCCLE ("All approved"), so the recommended option (a
 - 2026-09-30. Status: Draft. Spec drafted from JOSH-4, JOSH-17, and Figma `101:364`. Approver U0BM4GCCCLE chose a fresh build on JOSH-4 (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790775146559869). Critic and verifier subagent model: inherit.
 - 2026-09-30. Status: Draft. spec-critic review (independent, model inherit) returned 2 blockers and 5 majors. Facts resolved in the spec: date locale, currency format, table collapse, sort semantics, test fixtures, and scope leaks. Product decisions moved to Q1–Q4.
 - 2026-09-30. Status: Spec approved. Gate 1 approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790775715806389), with the recommended answers 1a, 2a, 3a, 4a. Scope: JOSH-4 + JOSH-17. Follow-ups: JOSH-18, JOSH-11, JOSH-12.
+- 2026-09-30. Status: Tasks approved. Gate 2+3 (plan + tasks) approved by U0BM4GCCCLE ("Continue", https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790777211249139).
+- 2026-09-30. Status: In progress. Diff base: 713780c.
