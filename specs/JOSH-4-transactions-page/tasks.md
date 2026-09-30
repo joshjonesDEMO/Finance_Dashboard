@@ -27,12 +27,12 @@ Each task is test first: write or extend its tests, watch them fail, implement, 
   - Covers: FR-013, FR-014, NFR-002
   - Depends on: none
   - Verify: `npx vitest run tests/components/Pagination.test.tsx`
-- [ ] **T5. `TransactionsView` client component**
+- [x] **T5. `TransactionsView` client component**
   - Files: `components/transactions/TransactionsView.tsx`, `tests/components/TransactionsView.test.tsx`
   - Covers: FR-002–FR-016, NFR-001–NFR-003
   - Depends on: T1–T4
   - Verify: `npx vitest run tests/components/TransactionsView.test.tsx`
-- [ ] **T6. Wire the page**
+- [x] **T6. Wire the page**
   - Files: `app/transactions/page.tsx`
   - Covers: FR-001, FR-002
   - Depends on: T5
