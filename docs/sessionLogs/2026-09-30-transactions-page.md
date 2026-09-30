@@ -30,6 +30,9 @@ A Slack request in #finance-dashboard asked to build out the Transactions page. 
 - **Decision:** Pure list logic in `lib/transactions.ts`, with one small client component. **Tradeoff:** One extra module, but sorting/filtering/paging are unit-testable without rendering.
 - **Decision:** Highest/Lowest sort by signed amount. **Tradeoff:** Large expenses sort to the bottom of Highest, which is the conventional reading, not the "biggest movement" reading.
 - **Decision:** Stable ties in both sort directions, with no reverse-of-ascending shortcut. **Tradeoff:** Slightly more comparator code, but duplicate names and dates in the data order deterministically.
+- **Decision (Gate 1):** The approver took every recommended option. Scope is JOSH-4 + JOSH-17. Overview switches to the "19 Aug 2024" date format. Filter state stays local. Dropdowns are native selects. **Tradeoff:** Filtered views can't be shared by URL, and the open dropdown uses the OS look.
+- **Decision (plan):** Reset to page 1 inside the control handlers, not with `useEffect`. **Tradeoff:** Each handler sets two pieces of state, but there is no extra render and no set-state-in-effect lint suppression.
+- **Decision (plan):** Use lucide outline chevrons instead of Figma's filled caret. **Tradeoff:** A small visual difference, but no new icon dependency.
 - **Decision:** Multi-page behaviour is proven with fixture data. **Tradeoff:** The live page shows one page until JOSH-18 grows the dataset.
 
 ## Follow-ups / known gaps
