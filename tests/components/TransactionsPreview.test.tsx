@@ -39,13 +39,21 @@ describe("TransactionsPreview", () => {
     expect(screen.getByText("Savory Bites Bistro")).toBeInTheDocument();
     expect(screen.getByText("General")).toBeInTheDocument();
     expect(screen.getByText("Dining Out")).toBeInTheDocument();
-    expect(screen.getAllByText("Aug 19, 2024")).toHaveLength(2);
+    expect(screen.getAllByText("19 Aug 2024")).toHaveLength(2);
   });
 
   it("formats positive amounts with a + and negatives with a -", () => {
     render(<TransactionsPreview transactions={transactions} />);
     expect(screen.getByText("+$75.50")).toBeInTheDocument();
     expect(screen.getByText("-$55.50")).toBeInTheDocument();
+  });
+
+  it("links to the full Transactions page", () => {
+    render(<TransactionsPreview transactions={transactions} />);
+    expect(screen.getByRole("link", { name: "See Details" })).toHaveAttribute(
+      "href",
+      "/transactions",
+    );
   });
 
   it("renders nothing in the list when given no transactions", () => {
