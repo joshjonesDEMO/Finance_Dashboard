@@ -7,22 +7,22 @@ Legend: `[ ]` todo, `[x]` done (its check passed), `[?]` blocked on a spec/plan 
 
 Each task is test first: write or extend its tests, watch them fail, implement, then run its verification.
 
-- [ ] **T1. Shared formatters**
+- [x] **T1. Shared formatters**
   - Files: `lib/format.ts`, `tests/lib/format.test.ts`
   - Covers: FR-004, FR-005
   - Depends on: none
   - Verify: `npx vitest run tests/lib/format.test.ts`
-- [ ] **T2. List logic**
+- [x] **T2. List logic**
   - Files: `lib/transactions.ts`, `tests/lib/transactions.test.ts`
   - Covers: FR-006–FR-012, NFR-004
   - Depends on: none
   - Verify: `npx vitest run tests/lib/transactions.test.ts`
-- [ ] **T3. Move `TransactionAvatar`; update Overview preview**
+- [x] **T3. Move `TransactionAvatar`; update Overview preview**
   - Files: `components/transactions/TransactionAvatar.tsx`, `components/overview/TransactionsPreview.tsx`, `tests/components/TransactionsPreview.test.tsx`
   - Covers: FR-003, FR-017, FR-018
   - Depends on: T1
   - Verify: `npx vitest run tests/components/TransactionsPreview.test.tsx`
-- [ ] **T4. Pagination component**
+- [x] **T4. Pagination component**
   - Files: `components/transactions/Pagination.tsx`, `tests/components/Pagination.test.tsx`
   - Covers: FR-013, FR-014, NFR-002
   - Depends on: none
