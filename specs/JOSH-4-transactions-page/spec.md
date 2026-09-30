@@ -1,6 +1,6 @@
 # JOSH-4: Transactions page
 
-- **Status:** Draft
+- **Status:** In progress
 - **Track:** Full. A new page, 4+ new or changed files, and new client-side list logic.
 - **Feature ID:** JOSH-4-transactions-page
 - **Branch:** `cursor/josh-4-transactions-page` (from `origin/main`)
@@ -63,7 +63,7 @@
 - **FR-001** `/transactions` renders a page titled "Transactions" and no longer renders `PlaceholderPage`.
 - **FR-002** The page lists transactions from `getFinanceData().transactions`, 10 per page.
 - **FR-003** Each row shows the avatar (colored initial), name, category, date, and amount.
-- **FR-004** Dates format as `Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })` on the ISO date. For example, `2024-08-19` becomes "19 Aug 2024".
+- **FR-004** Dates format as `<UTC day> <3-letter month> <UTC year>`, using a fixed month list (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec) rather than locale data, so server and browser output are identical. For example, `2024-08-19` becomes "19 Aug 2024" and `2024-09-01` becomes "1 Sep 2024".
 - **FR-005** Amounts use `formatCurrency`, with thousands separators. `amount >= 0` shows `+` in `secondary-green`, and `amount < 0` shows `-` in `grey-900`. For example: "+$1,200.00" and "-$55.50".
 - **FR-006** The default sort is Latest.
 - **FR-007** Sort options:
@@ -97,6 +97,9 @@
   - The list is a real `<table>` with `<th scope="col">` headers.
   - The pager is a `<nav aria-label="Pagination">`.
   - Dropdowns are native `<select>` elements styled to the tokens.
+  - An always-mounted `role="status"` region announces the result count ("N transactions found") when search, sort, or category changes.
+  - The search box, dropdowns, and page buttons show a visible `grey-900` focus outline (`focus-visible`).
+  - Below `sm`, the dropdown labels are visually hidden but keep their accessible names.
 - **NFR-003** Below `md` (768px), the Category and Transaction Date header and data cells are hidden (`hidden md:table-cell`), and the name cell shows category and date under the name. At `md` and above, the name cell shows only the name.
 - **NFR-004** Filtering, sorting, pagination, and category listing are pure functions in `lib/transactions.ts` with unit tests. The client component only holds state and renders.
 - **NFR-005** `npm run lint`, `npm run test`, and `npm run build` all pass.
@@ -118,7 +121,7 @@ Criterion 1 runs against the real data. The rest run against fixture arrays pass
 11. **Given** 10 or fewer matching rows, **when** the component renders, **then** one page button shows and Prev and Next are both disabled. (FR-013, FR-014)
 12. **Given** the Overview Transactions card, **when** it renders, **then** it has a "See Details" link with `href="/transactions"`. (FR-017)
 13. **Given** an Overview transaction dated 2024-08-19, **when** it renders, **then** it shows "19 Aug 2024". (FR-018)
-14. **Given** a viewport under 768px wide, **when** `/transactions` renders, **then** there is no horizontal scroll, and each row shows its category and date under the name. This is checked manually in the recording. (NFR-003)
+14. **Given** a viewport under 768px wide, **when** `/transactions` renders, **then**, with the sidebar collapsed, there is no horizontal scroll, and each row shows its category and date under the name. The expanded-sidebar case belongs to JOSH-12. This is checked with a headless width probe and a screenshot. (NFR-003)
 
 ## Must not
 
@@ -156,3 +159,5 @@ Answered at Gate 1 by U0BM4GCCCLE ("All approved"), so the recommended option (a
 - 2026-09-30. Status: In progress. pre-push-reviewer (review-josh4-transactions-page-7c1e): fixed name truncation in the table, added a persistent result-count status region, and added visible focus rings. Deferred unifying `getLatestTransactions` (`lib/data.ts` is outside the approved file map; behaviour is identical today). Open: FR-004's `en-GB` formatter renders "Sept" and is ICU-dependent, which risks a hydration mismatch. Proposed an amendment to the approver; T1 marked [?].
 - 2026-09-30. Status: In progress. spec-verifier (independent, model inherit) failed AC14. The Category control made the page 397px wide at 375px with the sidebar collapsed. Fixed by hiding the dropdown labels visually below `sm` (they stay accessible names). The page now measures 375/375px. All other FRs, NFRs, and Must-nots were met.
 - 2026-09-30. Status: Draft. Gate 1 reopened for amendments: FR-004 (fixed 3-letter months), AC14 (collapsed sidebar only; expanded is JOSH-12), recording the status region and focus rings as NFR-002 additions, and waiving the T7 video. T1 stays [?] until answered.
+- 2026-09-30. Status: Tasks approved. Amendments approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790779565144619): 1a (FR-004 fixed months), 2a (AC14 collapsed sidebar only), 3a (NFR-002 additions), 4a (video waived; screenshots + scripted walkthrough stand in). Plan and tasks unchanged.
+- 2026-09-30. Status: In progress. Implementing the FR-004 amendment (T1).

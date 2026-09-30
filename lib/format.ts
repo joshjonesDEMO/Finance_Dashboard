@@ -21,15 +21,13 @@ export function formatSignedAmount(amount: number): string {
   return amount >= 0 ? `+${formatCurrency(amount)}` : formatCurrency(amount);
 }
 
-// ISO date-only strings parse as UTC midnight, so formatting must also use UTC
-// or the day shifts in negative-offset time zones.
-const transactionDateFormat = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-  timeZone: "UTC",
-});
+// A fixed list instead of Intl month names: ICU versions abbreviate some months
+// differently (e.g. "Sept"), which would mismatch server and client renders.
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+// ISO date-only strings parse as UTC midnight, so read UTC parts or the day
+// shifts in negative-offset time zones.
 export function formatTransactionDate(iso: string): string {
-  return transactionDateFormat.format(new Date(iso));
+  const d = new Date(iso);
+  return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
 }

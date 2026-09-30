@@ -35,7 +35,7 @@ describe("formatTransactionDate", () => {
   });
 
   it("does not drift across time zones at month boundaries", () => {
-    expect(formatTransactionDate("2024-09-01")).toBe("1 Sept 2024");
+    expect(formatTransactionDate("2024-09-01")).toBe("1 Sep 2024");
     expect(formatTransactionDate("2022-12-31")).toBe("31 Dec 2022");
   });
 });

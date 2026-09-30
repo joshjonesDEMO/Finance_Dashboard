@@ -7,7 +7,7 @@ Legend: `[ ]` todo, `[x]` done (its check passed), `[?]` blocked on a spec/plan 
 
 Each task is test first: write or extend its tests, watch them fail, implement, then run its verification.
 
-- [?] **T1. Shared formatters** (FR-004 month abbreviation pending approver; see spec Log)
+- [x] **T1. Shared formatters**
   - Files: `lib/format.ts`, `tests/lib/format.test.ts`
   - Covers: FR-004, FR-005
   - Depends on: none
@@ -37,7 +37,7 @@ Each task is test first: write or extend its tests, watch them fail, implement, 
   - Covers: FR-001, FR-002
   - Depends on: T5
   - Verify: `npm run build` prerenders `/transactions`, and the page is checked in the dev server
-- [ ] **T7. Full verification and evidence**
+- [x] **T7. Full verification and evidence**
   - Files: `specs/JOSH-4-transactions-page/*`, `docs/sessionLogs/2026-09-30-transactions-page.md`
   - Covers: NFR-005, AC 1 and 14
   - Depends on: T1–T6
@@ -69,3 +69,4 @@ Every task covers at least one requirement, and every requirement has at least o
 
 - 2026-09-30. Status: Draft. Tasks drafted with the plan.
 - 2026-09-30. Status: Approved. Gate 3 approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790777211249139).
+- 2026-09-30. T1 re-done under the amended FR-004. T7 done: lint, test, and build (with font mock) pass. Video waived by the approver (4a); screenshots plus the scripted walkthrough and a headless width probe stand in.

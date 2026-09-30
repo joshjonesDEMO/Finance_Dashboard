@@ -35,12 +35,15 @@ A Slack request in #finance-dashboard asked to build out the Transactions page. 
 - **Decision (plan):** Use lucide outline chevrons instead of Figma's filled caret. **Tradeoff:** A small visual difference, but no new icon dependency.
 - **Decision:** Multi-page behaviour is proven with fixture data. **Tradeoff:** The live page shows one page until JOSH-18 grows the dataset.
 
-- **Decision (implement):** Follow FR-004's `en-GB` formatter literally, even though it renders September as "Sept", not Figma's 3-letter style. **Tradeoff:** A cosmetic mismatch that no current data triggers. Raised at Gate 4 instead of reopening the spec.
+- **Decision (spec amendment, approved):** FR-004 now uses a fixed 3-letter month list, not `Intl` month names. ICU renders September as "Sept" and can differ between Node and the browser, which risks a hydration mismatch. **Tradeoff:** English-only month names, which the app already assumes.
+- **Decision (review):** Fixed name truncation, added a result-count live region and focus rings, and visually hid the dropdown labels below `sm` so the toolbar fits at 375px. Deferred unifying `getLatestTransactions` with the Latest comparator (`lib/data.ts` is outside the approved file map). **Tradeoff:** Two equivalent comparators exist until a follow-up merges them.
+- **Decision (spec amendment, approved):** AC14 applies with the sidebar collapsed. The expanded 240px sidebar overflows every page at phone width and belongs to JOSH-12.
 - **Decision (verify):** Run `npm run build` locally with `NEXT_FONT_GOOGLE_MOCKED_RESPONSES` and a local font server, because this sandbox blocks `fonts.gstatic.com`. **Tradeoff:** The local build proves compile, types, and prerender, but not the real font download. CI does that.
 
 ## Follow-ups / known gaps
 
-- [ ] No screen recording: both attempts filled the VM disk mid-capture. Screenshots and a scripted computer-use walkthrough stand in.
+- [ ] No screen recording: both attempts filled the VM disk mid-capture. The approver waived the video; screenshots, a scripted computer-use walkthrough, and a headless width probe stand in.
+- [ ] Unify `getLatestTransactions` (`lib/data.ts`) with `sortTransactions(..., "Latest")`.
 - [ ] On phones the existing sidebar still takes about a third of the width (JOSH-12).
 
 - [ ] PRs #8 and #9 will conflict with this work and should be closed if this ships.
