@@ -42,7 +42,7 @@ A Slack request in #finance-dashboard asked to build out the Transactions page. 
 
 ## Follow-ups / known gaps
 
-- [ ] No screen recording: both attempts filled the VM disk mid-capture. The approver waived the video; screenshots, a scripted computer-use walkthrough, and a headless width probe stand in.
+- [x] Screen recording: the first two attempts filled the VM disk and the approver waived video. At Gate 4 the approver asked for it after all. It was recorded by driving a visible Chrome over the DevTools protocol, because the computer-use subagent could no longer run. The recording is attached to the PR and posted in the thread.
 - [ ] Unify `getLatestTransactions` (`lib/data.ts`) with `sortTransactions(..., "Latest")`.
 - [ ] On phones the existing sidebar still takes about a third of the width (JOSH-12).
 
