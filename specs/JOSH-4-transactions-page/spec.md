@@ -1,16 +1,15 @@
 # JOSH-4: Transactions page
 
-- **Status:** Draft
+- **Status:** Spec approved
 - **Track:** Full. A new page, 4+ new or changed files, and new client-side list logic.
 - **Feature ID:** JOSH-4-transactions-page
 - **Branch:** `cursor/josh-4-transactions-page` (from `origin/main`)
 - **Sources:**
   - Slack request: https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790774896175549
   - Jira primary: [JOSH-4](https://fe-anysphere-demo.atlassian.net/browse/JOSH-4) "Build Transactions page from Overview preview"
-  - Jira related (scope decided at Gate 1): [JOSH-17](https://fe-anysphere-demo.atlassian.net/browse/JOSH-17) pagination, [JOSH-18](https://fe-anysphere-demo.atlassian.net/browse/JOSH-18) seed data, [JOSH-11](https://fe-anysphere-demo.atlassian.net/browse/JOSH-11) avatar images, [JOSH-12](https://fe-anysphere-demo.atlassian.net/browse/JOSH-12) mobile layouts
+  - Jira included: [JOSH-17](https://fe-anysphere-demo.atlassian.net/browse/JOSH-17) pagination
+  - Jira follow-ups: [JOSH-18](https://fe-anysphere-demo.atlassian.net/browse/JOSH-18) seed data, [JOSH-11](https://fe-anysphere-demo.atlassian.net/browse/JOSH-11) avatar images, [JOSH-12](https://fe-anysphere-demo.atlassian.net/browse/JOSH-12) mobile layouts
   - Figma: `rJb9XS7DMeIaTRYtpH1RuK`, **Desktop - Transactions** (`101:364`), Design System (`182:285`)
-
-Items marked **[NEEDS CLARIFICATION Qn]** use the recommended answer to question *n* under Clarifications. They are updated once the approver answers at Gate 1.
 
 ## Outcomes
 
@@ -24,20 +23,20 @@ Items marked **[NEEDS CLARIFICATION Qn]** use the recommended answer to question
 - Replace the `/transactions` placeholder with the full page.
 - A toolbar with search by name, a sort dropdown, and a category dropdown, per Figma `101:364`.
 - A table with columns Recipient / Sender, Category, Transaction Date, and Amount.
-- Client-side pagination at 10 rows per page with Prev, numbered pages, and Next. This is JOSH-17. **[NEEDS CLARIFICATION Q1]**
+- Client-side pagination at 10 rows per page with Prev, numbered pages, and Next. This is JOSH-17.
 - An empty state when no transactions match.
 - A "See Details" link on the Overview Transactions card, reusing the header-and-link pattern from `BudgetsCard` and `PotsSummary`.
 - Shared helpers for the avatar, date, and signed amount, used by both Overview and Transactions. Row markup is not shared, and each page keeps its own row layout and divider.
-- Switching Overview dates to the Figma format "19 Aug 2024". **[NEEDS CLARIFICATION Q2]**
+- Switching Overview dates to the Figma format "19 Aug 2024".
 
 **Out of scope**
 - Creating, editing, or deleting transactions, and any persistence.
-- Changes to `data/finance.json` (JOSH-18). **[NEEDS CLARIFICATION Q1]**
-- Real avatar images from Figma assets (JOSH-11). Colored initials stay. **[NEEDS CLARIFICATION Q1]**
+- Changes to `data/finance.json` (JOSH-18).
+- Real avatar images from Figma assets (JOSH-11). Colored initials stay.
 - Mobile/tablet frames and bottom navigation (JOSH-12). The table only has to stay usable at narrow widths (NFR-003).
 - Search debounce, a clear-search button, and searching on category.
 - Collapsing page numbers with an ellipsis. Every page number is shown.
-- Syncing filter state to the URL. **[NEEDS CLARIFICATION Q3]**
+- Syncing filter state to the URL.
 - Sidebar changes (its `/transactions` active state already exists).
 - Budgets, Pots, and Recurring Bills pages.
 
@@ -83,7 +82,7 @@ Items marked **[NEEDS CLARIFICATION Qn]** use the recommended answer to question
 - **FR-015** Changing search, sort, or category resets to page 1.
 - **FR-016** When nothing matches, the table rows are replaced by "No transactions found." and pagination is hidden.
 - **FR-017** The Overview Transactions card shows a "See Details" link to `/transactions`.
-- **FR-018** Overview transaction dates use the FR-004 format. **[NEEDS CLARIFICATION Q2]**
+- **FR-018** Overview transaction dates use the FR-004 format.
 
 ### Non-functional
 
@@ -97,7 +96,7 @@ Items marked **[NEEDS CLARIFICATION Qn]** use the recommended answer to question
   - Search, sort, and category each have a label.
   - The list is a real `<table>` with `<th scope="col">` headers.
   - The pager is a `<nav aria-label="Pagination">`.
-  - Dropdowns are native `<select>` elements styled to the tokens. **[NEEDS CLARIFICATION Q4]**
+  - Dropdowns are native `<select>` elements styled to the tokens.
 - **NFR-003** Below `md` (768px), the Category and Transaction Date header and data cells are hidden (`hidden md:table-cell`), and the name cell shows category and date under the name. At `md` and above, the name cell shows only the name.
 - **NFR-004** Filtering, sorting, pagination, and category listing are pure functions in `lib/transactions.ts` with unit tests. The client component only holds state and renders.
 - **NFR-005** `npm run lint`, `npm run test`, and `npm run build` all pass.
@@ -131,7 +130,7 @@ Criterion 1 runs against the real data. The rest run against fixture arrays pass
 
 ## Clarifications
 
-Asked at Gate 1. The recommended answer comes first and is what the spec assumes until answered.
+Answered at Gate 1 by U0BM4GCCCLE ("All approved"), so the recommended option (a) applies to each: 1a, 2a, 3a, 4a.
 
 - **Q1. Related ticket scope.**
   - (a) Include JOSH-17 pagination. JOSH-18 seed data, JOSH-11 avatars, and JOSH-12 mobile are follow-ups.
@@ -151,3 +150,4 @@ Asked at Gate 1. The recommended answer comes first and is what the spec assumes
 
 - 2026-09-30. Status: Draft. Spec drafted from JOSH-4, JOSH-17, and Figma `101:364`. Approver U0BM4GCCCLE chose a fresh build on JOSH-4 (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790775146559869). Critic and verifier subagent model: inherit.
 - 2026-09-30. Status: Draft. spec-critic review (independent, model inherit) returned 2 blockers and 5 majors. Facts resolved in the spec: date locale, currency format, table collapse, sort semantics, test fixtures, and scope leaks. Product decisions moved to Q1–Q4.
+- 2026-09-30. Status: Spec approved. Gate 1 approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790775715806389), with the recommended answers 1a, 2a, 3a, 4a. Scope: JOSH-4 + JOSH-17. Follow-ups: JOSH-18, JOSH-11, JOSH-12.

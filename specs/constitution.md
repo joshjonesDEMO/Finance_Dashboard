@@ -1,6 +1,6 @@
 # Finance Dashboard constitution
 
-- **Status:** Draft
+- **Status:** Ratified
 - **Sources:** `AGENTS.md`, `.cursor/rules/*.mdc`, `.cursor/skills/*/SKILL.md`, `.github/workflows/ci.yml`, `.github/pull_request_template.md`
 
 These are the non-negotiable rules every spec, plan, and change in this repo is checked against.
@@ -35,3 +35,4 @@ These are the non-negotiable rules every spec, plan, and change in this repo is 
 ## Log
 
 - 2026-09-30. Status: Draft. Drafted from AGENTS.md, rules, skills, and CI for JOSH-4 (first Full-track feature).
+- 2026-09-30. Status: Ratified. Approved by U0BM4GCCCLE at Gate 1 (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790775715806389).
