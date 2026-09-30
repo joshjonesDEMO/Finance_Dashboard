@@ -1,6 +1,6 @@
 # JOSH-4: Transactions page
 
-- **Status:** In progress
+- **Status:** Implemented
 - **Track:** Full. A new page, 4+ new or changed files, and new client-side list logic.
 - **Feature ID:** JOSH-4-transactions-page
 - **Branch:** `cursor/josh-4-transactions-page` (from `origin/main`)
@@ -161,3 +161,4 @@ Answered at Gate 1 by U0BM4GCCCLE ("All approved"), so the recommended option (a
 - 2026-09-30. Status: Draft. Gate 1 reopened for amendments: FR-004 (fixed 3-letter months), AC14 (collapsed sidebar only; expanded is JOSH-12), recording the status region and focus rings as NFR-002 additions, and waiving the T7 video. T1 stays [?] until answered.
 - 2026-09-30. Status: Tasks approved. Amendments approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790779565144619): 1a (FR-004 fixed months), 2a (AC14 collapsed sidebar only), 3a (NFR-002 additions), 4a (video waived; screenshots + scripted walkthrough stand in). Plan and tasks unchanged.
 - 2026-09-30. Status: In progress. Implementing the FR-004 amendment (T1).
+- 2026-09-30. Status: Implemented. Gate 4 approved by U0BM4GCCCLE (https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790782209021039): open a draft PR, comment on JOSH-4 and JOSH-17 with no transitions, post the PR link. The approver also asked for video evidence in the thread and the PR, which reverses the 4a waiver.
