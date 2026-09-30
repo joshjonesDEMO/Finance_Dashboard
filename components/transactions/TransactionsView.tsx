@@ -21,7 +21,7 @@ type TransactionsViewProps = {
 };
 
 const fieldClass =
-  "h-10 rounded-lg border border-beige-500 bg-white text-preset-4 text-grey-900 outline-none focus-visible:border-grey-900";
+  "h-10 rounded-lg border border-beige-500 bg-white text-preset-4 text-grey-900 outline-none focus-visible:border-grey-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-900";
 
 type SelectProps = {
   id: string;
@@ -122,6 +122,10 @@ export function TransactionsView({ transactions }: TransactionsViewProps) {
         </div>
       </div>
 
+      <p role="status" className="sr-only">
+        {visible.length} {visible.length === 1 ? "transaction" : "transactions"} found
+      </p>
+
       {current.items.length === 0 ? (
         <p className="py-10 text-center text-preset-4 text-grey-500">No transactions found.</p>
       ) : (
@@ -132,10 +136,10 @@ export function TransactionsView({ transactions }: TransactionsViewProps) {
                 <th scope="col" className="py-3 pr-4 font-normal">
                   Recipient / Sender
                 </th>
-                <th scope="col" className="hidden py-3 pr-4 font-normal md:table-cell">
+                <th scope="col" className="hidden whitespace-nowrap py-3 pr-4 font-normal md:table-cell md:w-48">
                   Category
                 </th>
-                <th scope="col" className="hidden py-3 pr-4 font-normal md:table-cell">
+                <th scope="col" className="hidden whitespace-nowrap py-3 pr-4 font-normal md:table-cell md:w-48">
                   Transaction Date
                 </th>
                 <th scope="col" className="py-3 text-right font-normal">
@@ -149,8 +153,8 @@ export function TransactionsView({ transactions }: TransactionsViewProps) {
                   key={`${tx.name}-${tx.date}-${i}`}
                   className="border-b border-grey-100 last:border-b-0"
                 >
-                  <td className="py-4 pr-4">
-                    <div className="flex items-center gap-4">
+                  <td className="w-full max-w-0 py-4 pr-4">
+                    <div className="flex min-w-0 items-center gap-4">
                       <TransactionAvatar tx={tx} />
                       <div className="min-w-0">
                         <p className="truncate text-preset-4-bold text-grey-900">{tx.name}</p>
@@ -160,10 +164,10 @@ export function TransactionsView({ transactions }: TransactionsViewProps) {
                       </div>
                     </div>
                   </td>
-                  <td className="hidden py-4 pr-4 text-preset-5 text-grey-500 md:table-cell">
+                  <td className="hidden whitespace-nowrap py-4 pr-4 text-preset-5 text-grey-500 md:table-cell">
                     {tx.category}
                   </td>
-                  <td className="hidden py-4 pr-4 text-preset-5 text-grey-500 md:table-cell">
+                  <td className="hidden whitespace-nowrap py-4 pr-4 text-preset-5 text-grey-500 md:table-cell">
                     {formatTransactionDate(tx.date)}
                   </td>
                   <td className="py-4 text-right">

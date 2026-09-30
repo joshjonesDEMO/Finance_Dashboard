@@ -7,7 +7,7 @@ Legend: `[ ]` todo, `[x]` done (its check passed), `[?]` blocked on a spec/plan 
 
 Each task is test first: write or extend its tests, watch them fail, implement, then run its verification.
 
-- [x] **T1. Shared formatters**
+- [?] **T1. Shared formatters** (FR-004 month abbreviation pending approver; see spec Log)
   - Files: `lib/format.ts`, `tests/lib/format.test.ts`
   - Covers: FR-004, FR-005
   - Depends on: none

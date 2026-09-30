@@ -132,6 +132,17 @@ describe("TransactionsView", () => {
     expect(screen.queryByRole("navigation", { name: "Pagination" })).not.toBeInTheDocument();
   });
 
+  it("announces the result count through a persistent status region", () => {
+    render(<TransactionsView transactions={small} />);
+    const status = screen.getByRole("status");
+    expect(status).toHaveTextContent("5 transactions found");
+    fireEvent.change(search(), { target: { value: "emma" } });
+    expect(screen.getByRole("status")).toBe(status);
+    expect(status).toHaveTextContent("2 transactions found");
+    fireEvent.change(search(), { target: { value: "zzz" } });
+    expect(status).toHaveTextContent("0 transactions found");
+  });
+
   it("shows a single disabled-arrow page for 10 or fewer rows", () => {
     render(<TransactionsView transactions={small} />);
     expect(currentPage()).toBe("1");

@@ -7,7 +7,7 @@ type PaginationProps = {
 };
 
 const buttonBase =
-  "flex h-10 items-center justify-center rounded-lg border text-preset-4 transition-colors disabled:cursor-not-allowed disabled:opacity-40";
+  "flex h-10 items-center justify-center rounded-lg border text-preset-4 transition-colors disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-900";
 const idle = "border-beige-500 bg-white text-grey-900 enabled:hover:bg-beige-500 enabled:hover:text-white";
 
 export function Pagination({ page, pageCount, onPageChange }: PaginationProps) {
