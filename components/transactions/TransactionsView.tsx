@@ -34,7 +34,7 @@ type SelectProps = {
 function LabelledSelect({ id, label, value, options, onChange }: SelectProps) {
   return (
     <div className="flex items-center gap-2">
-      <label htmlFor={id} className="text-preset-4 text-grey-500 whitespace-nowrap">
+      <label htmlFor={id} className="text-preset-4 text-grey-500 whitespace-nowrap max-sm:sr-only">
         {label}
       </label>
       <div className="relative">

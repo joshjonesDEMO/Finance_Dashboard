@@ -1,6 +1,6 @@
 # JOSH-4: Transactions page
 
-- **Status:** In progress
+- **Status:** Draft
 - **Track:** Full. A new page, 4+ new or changed files, and new client-side list logic.
 - **Feature ID:** JOSH-4-transactions-page
 - **Branch:** `cursor/josh-4-transactions-page` (from `origin/main`)
@@ -154,3 +154,5 @@ Answered at Gate 1 by U0BM4GCCCLE ("All approved"), so the recommended option (a
 - 2026-09-30. Status: Tasks approved. Gate 2+3 (plan + tasks) approved by U0BM4GCCCLE ("Continue", https://cursor-solutions.slack.com/archives/C0BFU03CWD8/p1790777211249139).
 - 2026-09-30. Status: In progress. Diff base: 713780c.
 - 2026-09-30. Status: In progress. pre-push-reviewer (review-josh4-transactions-page-7c1e): fixed name truncation in the table, added a persistent result-count status region, and added visible focus rings. Deferred unifying `getLatestTransactions` (`lib/data.ts` is outside the approved file map; behaviour is identical today). Open: FR-004's `en-GB` formatter renders "Sept" and is ICU-dependent, which risks a hydration mismatch. Proposed an amendment to the approver; T1 marked [?].
+- 2026-09-30. Status: In progress. spec-verifier (independent, model inherit) failed AC14. The Category control made the page 397px wide at 375px with the sidebar collapsed. Fixed by hiding the dropdown labels visually below `sm` (they stay accessible names). The page now measures 375/375px. All other FRs, NFRs, and Must-nots were met.
+- 2026-09-30. Status: Draft. Gate 1 reopened for amendments: FR-004 (fixed 3-letter months), AC14 (collapsed sidebar only; expanded is JOSH-12), recording the status region and focus rings as NFR-002 additions, and waiving the T7 video. T1 stays [?] until answered.
