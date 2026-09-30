@@ -40,6 +40,18 @@
 - **Decision:** On the three branches whose skill still targets `FIN`, switch the key to `JOSH`. **Tradeoff:** Changes more than the site line, but `FIN` on this site is FlowBuilder, so keeping it would send agents to the wrong project. Those branches' em-dash wording and other structure were kept.
 - **Decision:** Skip branches with no open PR (`8_4_Cloud&Automations`, `Next_Demo`, and others). **Tradeoff:** They keep stale skill text until they are rebased or merged.
 
+## Branches updated
+
+Each got one fast-forward commit that touches only `SKILL.md`:
+
+- `main` variant, so the new file is byte-identical to this PR's: `cursor/build-recurring-bills-page-9ae5` (#10), `cursor/josh-13-transactions-list-be2b` (#9), `cursor/josh-13-transactions-37ab` (#8), `cursor/josh-10-due-soon-total-29c6` (#7).
+- `FIN` variant, edited in its own em-dash style: `July_16_Bugbot_CloudAgent` (#5), `demo/financial-insights-card` (#4), `cursor/setup-dev-environment-f301` (#1). The last one has no `figma-fin-design` skill, so its copy drops that cross-reference.
+
+## Lessons
+
+- Check example MCP payloads in skills against the live tool schema. The old example used `issueType`, but `createJiraIssue` requires `issueTypeName`.
+- Check what a `cf[N]` field in a Jira URL actually is with `getJiraIssueTypeMetaWithFields`, and don't trust its label. Here `cf[10019]` was Rank, not Sprint.
+
 ## Follow-ups / known gaps
 
 - [ ] `figma-fin-design` lists Desktop - Home as `101:2`, but tickets (JOSH-10) cite `101:3`, and `101:3` is the actual "Desktop - Home" frame in the file. Worth reconciling in that skill.
