@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Sidebar links route to placeholder pages except **Overview** (`/`), which renders balance cards, pots summary, latest transactions, budgets (donut), and recurring bill stats.
+Open [http://localhost:3000](http://localhost:3000). **Overview** (`/`) renders balance cards, pots summary, latest transactions, budgets (donut), and recurring bill stats. **Transactions** (`/transactions`) lists every transaction from `[data/finance.json](data/finance.json)`. Other sidebar links are still placeholders.
 
 ## Scripts
 
