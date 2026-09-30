@@ -1,0 +1,38 @@
+# Session Log: Transactions page (JOSH-4)
+
+- **Date:** 2026-09-30
+- **Author:** Cursor delivery agent (for joshjonesDEMO)
+- **Related PR / branch:** `cursor/josh-4-transactions-page`
+- **Issue / ticket:** [JOSH-4](https://fe-anysphere-demo.atlassian.net/browse/JOSH-4)
+
+## Problem / goal
+
+A Slack request in #finance-dashboard asked to build out the Transactions page. `/transactions` is a placeholder, although the data and an Overview preview already exist. Delivered through spec-driven development, with each gate approved in the Slack thread.
+
+## Approach
+
+- Matched the request to JOSH-4, the only open JOSH ticket about replacing the placeholder. Related tickets JOSH-17 (pagination), JOSH-18 (seed data), JOSH-11 (avatars), and JOSH-12 (mobile) go to Gate 1 for scope.
+- Found two open PRs (#8, #9) that already replace the placeholder. Both are labelled JOSH-13, which is actually the Login/Sign Up ticket. The approver chose a fresh build.
+- Design source: Figma **Desktop - Transactions** (`101:364`), cited by JOSH-17. JOSH-4 itself names no frame.
+- Full track, since this is a new page plus new list logic. There was no constitution, so `specs/constitution.md` was drafted from AGENTS.md, the rules, skills, and CI.
+- Ran an independent spec-critic pass before Gate 1. Resolved its factual findings in the spec and turned its product decisions into four questions.
+
+## Alternatives considered
+
+| Option | Why not chosen |
+| --- | --- |
+| Continue PR #8 or #9 | Neither is tied to JOSH-4, both carry unrelated skill/doc edits, and neither followed the spec flow. The approver chose fresh. |
+| Branch from `SpecDrivenDevelopment` | It is a strict ancestor of `main` and is missing PR #11, so a PR against `main` would carry a stale base. |
+| Figma's fixed category list | The frame only shows the closed dropdown. Categories with no data would only yield empty results. |
+
+## Key decisions & tradeoffs
+
+- **Decision:** Pure list logic in `lib/transactions.ts`, with one small client component. **Tradeoff:** One extra module, but sorting/filtering/paging are unit-testable without rendering.
+- **Decision:** Highest/Lowest sort by signed amount. **Tradeoff:** Large expenses sort to the bottom of Highest, which is the conventional reading, not the "biggest movement" reading.
+- **Decision:** Stable ties in both sort directions, with no reverse-of-ascending shortcut. **Tradeoff:** Slightly more comparator code, but duplicate names and dates in the data order deterministically.
+- **Decision:** Multi-page behaviour is proven with fixture data. **Tradeoff:** The live page shows one page until JOSH-18 grows the dataset.
+
+## Follow-ups / known gaps
+
+- [ ] PRs #8 and #9 will conflict with this work and should be closed if this ships.
+- [ ] JOSH-18 (seed data) and JOSH-11 (avatar images) are recommended follow-ups, pending Gate 1.
