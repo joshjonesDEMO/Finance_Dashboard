@@ -35,7 +35,13 @@ A Slack request in #finance-dashboard asked to build out the Transactions page. 
 - **Decision (plan):** Use lucide outline chevrons instead of Figma's filled caret. **Tradeoff:** A small visual difference, but no new icon dependency.
 - **Decision:** Multi-page behaviour is proven with fixture data. **Tradeoff:** The live page shows one page until JOSH-18 grows the dataset.
 
+- **Decision (implement):** Follow FR-004's `en-GB` formatter literally, even though it renders September as "Sept", not Figma's 3-letter style. **Tradeoff:** A cosmetic mismatch that no current data triggers. Raised at Gate 4 instead of reopening the spec.
+- **Decision (verify):** Run `npm run build` locally with `NEXT_FONT_GOOGLE_MOCKED_RESPONSES` and a local font server, because this sandbox blocks `fonts.gstatic.com`. **Tradeoff:** The local build proves compile, types, and prerender, but not the real font download. CI does that.
+
 ## Follow-ups / known gaps
+
+- [ ] No screen recording: both attempts filled the VM disk mid-capture. Screenshots and a scripted computer-use walkthrough stand in.
+- [ ] On phones the existing sidebar still takes about a third of the width (JOSH-12).
 
 - [ ] PRs #8 and #9 will conflict with this work and should be closed if this ships.
 - [ ] JOSH-18 (seed data) and JOSH-11 (avatar images) are recommended follow-ups, pending Gate 1.
