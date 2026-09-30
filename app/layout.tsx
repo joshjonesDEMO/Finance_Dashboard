@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
-import { Public_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AppShell } from "@/components/shell/AppShell";
 
-const publicSans = Public_Sans({
+// Self-hosted Public Sans (variable, latin) so builds never depend on a
+// network fetch to Google Fonts. Font file sourced from
+// @fontsource-variable/public-sans.
+const publicSans = localFont({
+  src: "./fonts/public-sans-latin-variable.woff2",
   variable: "--font-public-sans",
-  subsets: ["latin"],
   display: "swap",
+  weight: "100 900",
 });
 
 export const metadata: Metadata = {

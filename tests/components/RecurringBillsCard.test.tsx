@@ -1,15 +1,18 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { RecurringBillsCard } from "@/components/overview/RecurringBillsCard";
-import type { FinanceData, RecurringBill } from "@/lib/types";
+import type { FinanceData, RecurringBill, RecurringBillStatus } from "@/lib/types";
 
-const bill = (name: string, amount: number): RecurringBill => ({
-  avatar: "x",
+const bill = (
+  name: string,
+  amount: number,
+  status: RecurringBillStatus,
+): RecurringBill => ({
   name,
-  category: "Bills",
-  date: "2024-01-01",
+  avatar: "x",
+  dayOfMonth: 1,
+  status,
   amount,
-  recurring: true,
 });
 
 const data: FinanceData = {
@@ -17,11 +20,14 @@ const data: FinanceData = {
   pots: [],
   transactions: [],
   budgets: [],
-  recurringBills: {
-    paid: [bill("Netflix", -15), bill("Spotify", -10)],
-    upcoming: [bill("Rent", -1200)],
-    dueSoon: [bill("Power", -80), bill("Water", -45), bill("Gas", -60)],
-  },
+  recurringBills: [
+    bill("Netflix", 15, "paid"),
+    bill("Spotify", 10, "paid"),
+    bill("Rent", 1200, "upcoming"),
+    bill("Power", 80, "dueSoon"),
+    bill("Water", 45, "dueSoon"),
+    bill("Gas", 60, "dueSoon"),
+  ],
 };
 
 describe("RecurringBillsCard", () => {
